@@ -60,6 +60,7 @@ if (isset($_SESSION['userid'])) {
                         <div class="form-group">
                             <label for="passengerGender">Gender</label>
                             <select class="form-control" name="passengerGender[]" required>
+                                <option value="male">Select</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
@@ -68,6 +69,7 @@ if (isset($_SESSION['userid'])) {
                         <div class="form-group">
                             <label for="dob">Date Of Birth</label>
                             <input type="date" class="form-control" name="dob[]" id="dob" required>
+                            <small class="text-danger" id="dobError"></small>
                         </div>
                         <div class="form-group">
                             <label for="age">Age</label>
@@ -102,12 +104,13 @@ if (isset($_SESSION['userid'])) {
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script>
    $(document).ready(function(){
-       $(document).on("input",".passengerform #dob",function(){
-        var input = $(this).val();
+       $(document).on("change",".passengerform #dob",function(){
+         var input = $(this).val();
          var dob =  new Date(input);
          var today = new Date();
          var age = today.getFullYear() - dob.getFullYear();
-         if (today.getMonth() < dob.getMonth() || (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) {
+        
+        if (today.getMonth() < dob.getMonth() || (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) {
           age--;
           }              
              $(this).closest('.passengerform').find('#age').val(age);
@@ -143,8 +146,6 @@ if(isset($_POST['submit'])){
                 $from_loc = $_POST['from'][$i];
                 $to_loc = $_POST['to'][$i];
                  
-                
-
                  $rowSeat = "SELECT * FROM seat WHERE seatno=$seatNumber";
                  $reslutRow = mysqli_query($con,$rowSeat);
                  $row = mysqli_fetch_array($reslutRow);
@@ -152,16 +153,15 @@ if(isset($_POST['submit'])){
                  $rownumber = $row['rowno'];
 
                  if($rownumber % 2 == 0){
-                    $adjacentColumn = $seatNum % 2 === 0 ? $seatNum + 1 : $seatNum - 1;
+                    $column = $seatNum % 2 === 0 ? $seatNum + 1 : $seatNum - 1;
                  }else{
-                    $adjacentColumn = $seatNum % 2 === 0 ? $seatNum - 1 : $seatNum + 1;
+                    $column = $seatNum % 2 === 0 ? $seatNum - 1 : $seatNum + 1;
                  }
 
-                 $fetchSeats = "SELECT * FROM seat WHERE seatno=$adjacentColumn";
+                 $fetchSeats = "SELECT * FROM seat WHERE seatno=$column";
                  $seatResult =  mysqli_query($con,$fetchSeats);
-                 $rowdata = mysqli_fetch_array($seatResult);
+                 $rowdata = mysqli_fetch_array($seatResult); 
                     if($rowdata['status'] == '1'){
-
                         header('location:warningMessage.php');
                         exit;
                     }else{
@@ -171,7 +171,6 @@ if(isset($_POST['submit'])){
                          }
                          $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
                          $passengerResult =  mysqli_query($con,$insertPassenger);
-
                     }
                 }
                 $boolean = true;

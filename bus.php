@@ -1,7 +1,5 @@
-
 <?php 
 session_start();
-
 $_SESSION['userid'] ;
 ?>  
 <!DOCTYPE html>
@@ -32,10 +30,9 @@ body {
 }
 .container {
     background-color:white;
-    padding: 40px;
-    border-radius: 25px;
+    padding: 30px;
+    border-radius: 20px;
     width: auto;
-    align-items: top;
     color: black;  
 
 }
@@ -89,16 +86,17 @@ margin-top: 4rem;
     <div class="container" id="box" >
         <form class="form-inline"  action="buses.php" method="post">
             <div class="form-group">
-                <label for="from">From : </label>
+                <label for="from">From : &ensp;</label>
                 <input type="text" class="form-control" id="from" name="from">
             </div>
             <div class="form-group">
-                <label for="to">To : </label>
+                <label for="to">&ensp;To :&ensp; </label>
                 <input type="text" class="form-control" id="to" name="to">
             </div>
             <div class="form-group">
-                <label for="TravelDate">Travel Date : </label>
+                <label for="TravelDate">&ensp;Travel Date : &ensp;</label>
                 <input type="date" class="form-control" id="date" name="date">
+                &ensp;
             </div>
             <div class="form-group" >
                 <button type="submit" name="SEARCH" id="SEARCH" class="btn btn-default Search"  style="background-color: chocolate; color: white;">SEARCH</button>

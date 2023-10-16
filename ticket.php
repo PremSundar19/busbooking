@@ -40,18 +40,11 @@ if(isset($_POST['booksubmit'])){
         }
 
         .disabled {
-            background-color: #E85958;
+            background-color: #F85958;
             cursor: not-allowed;
         }
-        #circle1{
-            border-radius : 25px;
-            background-color:red;
-            width : 20px;
-            height : 20px;
-        }
-        #price #busno {
-            display : inline;
-        }
+        
+        
     </style>
 </head>
 <body>
@@ -62,9 +55,6 @@ if(isset($_POST['booksubmit'])){
                 <div class="text-center">
                     <h2>Select Your Seat</h2>
                     <p>Available seats are marked in Lite Green</p>
-                    <form>
-                        <div id='circle1'></div>
-                    </form>
                 </div>
                 <div class="text-center">
                     <?php
@@ -129,9 +119,7 @@ if(isset($_POST['booksubmit'])){
         $('.seat').click(function() {
             var $seat = $(this);
             var value = $seat.val();
-            if ($seat.hasClass('disabled')) {
-                return;
-            }
+
             if ($seat.hasClass('selected')) {
                 $seat.removeClass('selected');
                 var index = selectedSeats.indexOf(value);
