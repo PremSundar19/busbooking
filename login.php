@@ -7,8 +7,11 @@
     <title>Login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
+
         
         body {
             background-image: url('login_bc.jpeg');
@@ -26,6 +29,8 @@
 
         .login-form {
             background-color: #fff;
+            background-attachment: fixed;
+
             padding: 35px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -75,15 +80,6 @@ if (isset($_POST['USER'])) {
 }
 ?>
 
-<div class="container message" style="display:none">
-      <div class="row justify-content-center">
-          <div class="col-md-6">
-              <div class="login-form">
-                      <div class="alert alert-success ">Logged in Successfully</div>
-                  </div>
-              </div>
-          </div>
-      </div>
 
     <div class="container">
         <div class="row justify-content-center">
@@ -93,7 +89,7 @@ if (isset($_POST['USER'])) {
                     <?php if (isset($loginError)) { ?>
                         <div class="alert alert-danger"><?php echo $loginError; ?></div>
                     <?php } ?>
-                    <form action="login.php" method="post">
+                    <form action="login.php" method="post" id="form">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
@@ -116,15 +112,6 @@ if (isset($_POST['USER'])) {
             </div>
         </div>
     </div>
-
-
-   <script>
-    $(decument).ready(function(){
-         $('form').on("submit",function(){
-           $(".message").show();
-         });
-    });
-   </script>
 
 </body>
 </html>

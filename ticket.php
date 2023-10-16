@@ -1,17 +1,20 @@
 
 <?php 
-session_start();
 
-if (isset($_SESSION['userid'])) {
-    $userId = $_SESSION['userid']; 
+session_start();
+  $userId = $_SESSION['userid'] ;
+if (!isset($_SESSION['userid'])) {
+    header("Location: login.php");
+    exit;
 }
+
 if(isset($_POST['booksubmit'])){
    $price = $_POST['price'];
    $busno = $_POST['busno'];
 }
 
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

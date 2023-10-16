@@ -1,3 +1,9 @@
+<?php session_start();
+  $userId = $_SESSION['userid'] ;
+if (!isset($_SESSION['userid'])) {
+    header("Location: login.php");
+    exit;
+}?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

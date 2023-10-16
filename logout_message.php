@@ -26,7 +26,7 @@
       <div class="row justify-content-center">
           <div class="col-md-6">
               <div class="login-form">
-                      <div class="alert alert-success ">Log Out Successfully</div>
+                      <div class="alert alert-success ">Logged Out Successfully</div>
                   </div>
               </div>
           </div>
