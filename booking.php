@@ -121,7 +121,6 @@ if (isset($_SESSION['userid'])) {
    });
 </script>
 <?php
- $seatAvailability = array_fill(11, 41, 'available');
 
 if(isset($_POST['submit'])){
         include_once('config.php');
