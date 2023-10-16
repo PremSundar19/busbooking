@@ -23,10 +23,7 @@
 <?php 
 session_start();
 $userId = $_SESSION['userid'] ;
-if (!isset($_SESSION['userid'])) {
-  header("Location: login.php");
-  exit;
-}
+
     ?>
 
 <div class="container mt-5">
@@ -49,6 +46,7 @@ if (!isset($_SESSION['userid'])) {
                 include_once('config.php');
                 $sql = "SELECT *  FROM passenger WHERE user_id=$userId";
                 $result = mysqli_query($con,$sql);
+            
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) {
                             echo "<tr>";
@@ -59,7 +57,7 @@ if (!isset($_SESSION['userid'])) {
                             echo "<td>" . $row["price"] . "</td>";
                                 echo "<td>";
                                 echo "<div class='button-container'>";
-                                echo "<form method='post' action='usertickets.php'>";
+                                echo "<form method='post' action='cancel_ticket.php'>";
                                 echo "<input type='hidden' name='seatno' value='" . $row["seatno"] . "'>";
                                 echo "<input id='CANCEL' class='btn btn-danger' value='CANCEL' type='submit' name='CANCEL'>";
                                 echo "</form>";
@@ -93,14 +91,11 @@ if (!isset($_SESSION['userid'])) {
                 $bresult = mysqli_query($con,$bsql);
                 $brow = mysqli_fetch_array($bresult);
                 $exAvailability = $brow['availability'];
-
                 $updatedAvailability = $exAvailability + 1;
                 $USQL = "UPDATE bus SET availability=$updatedAvailability where busno=$busno";
                 mysqli_query($con,$USQL);
-
                 $seatQuery = "UPDATE seat SET status=0 WHERE seatno=$seatno";
                 mysqli_query($con,$seatQuery);
-
                 header("location:ticket_cancelled_message.php");
                 exit;
             }

@@ -22,7 +22,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="login-form">
-                        <div class="alert alert-success "> Your Ticket Has Been Cancelled Successfully</div>
+                        <div class="alert alert-success "> Your Ticket Has Been Cancelled Successfully! </div>
                         <div class="alert alert-success ">Your amount will be credited withn 2 or 3 days.</div>
                     </div>
                 </div>
