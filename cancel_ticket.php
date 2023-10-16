@@ -41,7 +41,8 @@ if (!isset($_SESSION['userid'])) {
                     <th>From_location</th>
                     <th>To_location</th>
                     <th>Price</th>
-                 </tr>
+                    <th>Cancel-Ticket</th>
+                </tr>
             </thead>
             <tbody>
                 <?php
@@ -56,14 +57,54 @@ if (!isset($_SESSION['userid'])) {
                             echo "<td>" . $row["from_location"] . "</td>";
                             echo "<td>" . $row["to_location"] . "</td>";
                             echo "<td>" . $row["price"] . "</td>";
+                                echo "<td>";
+                                echo "<div class='button-container'>";
+                                echo "<form method='post' action='usertickets.php'>";
+                                echo "<input type='hidden' name='seatno' value='" . $row["seatno"] . "'>";
+                                echo "<input id='CANCEL' class='btn btn-danger' value='CANCEL' type='submit' name='CANCEL'>";
+                                echo "</form>";
+                                echo "</div>";
+                                echo "</td>";
+                            }
                             echo "</tr>";
-                        }
-                      }  else {
+                        }  else {
                     echo "<tr><td colspan='6'>No records found</td></tr>";
                 }
                 ?>
             </tbody>
         </table>    
     </div>
-   </body>
+
+    <?php 
+       if(isset($_POST['CANCEL'])){
+         $seatNumber = $_POST['seatno'];
+         include_once('config.php');
+         $psql = "SELECT * FROM passenger where seatno=$seatNumber";
+         $presult = mysqli_query($con,$psql);
+         $prow = mysqli_fetch_array($presult);
+         $busno = $prow['bus_id'];
+         $seatno = $prow['seatno'];
+
+
+        $dsql = "DELETE FROM passenger WHERE seatno=$seatNumber";
+        $result = mysqli_query($con,$dsql);
+            if($result){
+                $bsql = "SELECT * FROM bus where busno=$busno";
+                $bresult = mysqli_query($con,$bsql);
+                $brow = mysqli_fetch_array($bresult);
+                $exAvailability = $brow['availability'];
+
+                $updatedAvailability = $exAvailability + 1;
+                $USQL = "UPDATE bus SET availability=$updatedAvailability where busno=$busno";
+                mysqli_query($con,$USQL);
+
+                $seatQuery = "UPDATE seat SET status=0 WHERE seatno=$seatno";
+                mysqli_query($con,$seatQuery);
+
+                header("location:ticket_cancelled_message.php");
+                exit;
+            }
+       }
+    ?>
+</body>
 </html>

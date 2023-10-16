@@ -77,7 +77,7 @@ margin-top: 4rem;
                         <button type="submit" name="viewtickets" id="viewtickets" class="btn btn-default dropdown-item"  style=" color: black;">View Bookings</button>
                         </form>
 
-                        <form action="usertickets.php" method="post">
+                        <form action="cancel_ticket.php" method="post">
                         <button type="submit" name="CANCELTICKETS" id="CANCELTICKETS" class="btn btn-default dropdown-item"  style=" color: black;">Cancel Tickets</button>
                         </form>
                         <div class="dropdown-divider"></div>

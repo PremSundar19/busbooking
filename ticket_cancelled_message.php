@@ -29,13 +29,7 @@
             </div>
         </div>
        <?php 
-       session_start();
-       $userId = $_SESSION['userid'] ;
-     if (!isset($_SESSION['userid'])) {
-         header("Location: login.php");
-         exit;
-     }
-       header("Refresh:2;url=usertickets.php");
+       header("Refresh:2;url=cancel_ticket.php");
        ?>
     
 </body>
