@@ -46,8 +46,8 @@ if (isset($_POST['USER'])) {
         $id = $row['id'];
         if (password_verify($password, $storedHashedPassword) ) {
            if($row['status'] === "approved"){
-            session_start();
-            $_SESSION['userid'] = $id;
+               session_start();
+               $_SESSION['userid'] = $id;
                header("location:bus.php");
                exit;
            }else{
@@ -74,9 +74,16 @@ if (isset($_POST['USER'])) {
     }
 }
 ?>
-     <div id="success-popup" style="display: none;">
-        <p>Login successfully!</p>
-    </div>
+
+<div class="container message" style="display:none">
+      <div class="row justify-content-center">
+          <div class="col-md-6">
+              <div class="login-form">
+                      <div class="alert alert-success ">Logged in Successfully</div>
+                  </div>
+              </div>
+          </div>
+      </div>
 
     <div class="container">
         <div class="row justify-content-center">
@@ -109,14 +116,15 @@ if (isset($_POST['USER'])) {
             </div>
         </div>
     </div>
-    <script>
-        function showPopup() {
-            var popup = document.getElementById("success-popup");
-            popup.style.display = "block";
-            setTimeout(function () {
-                popup.style.display = "none";
-            }, 3000); 
-        }
-    </script>
+
+
+   <script>
+    $(decument).ready(function(){
+         $('form').on("submit",function(){
+           $(".message").show();
+         });
+    });
+   </script>
+
 </body>
 </html>

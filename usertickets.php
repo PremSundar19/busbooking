@@ -30,7 +30,7 @@ if (isset($_SESSION['userid'])) {
 <div class="container mt-5">
         <h2 style='display:inline'>Booked Tickets</h2>
         <a class="btn btn-primary home" href="bus.php">Home</a>
-        <a class="btn btn-primary logout" href="logout.php">Log Out</a>
+        <a class="btn btn-danger logout" href="logout.php">Log Out</a>
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
@@ -105,7 +105,7 @@ if (isset($_SESSION['userid'])) {
                 $seatQuery = "UPDATE seat SET status=0 WHERE seatno=$seatno";
                 mysqli_query($con,$seatQuery);
 
-                header("location:message.php");
+                header("location:ticket_cancelled_message.php");
                 exit;
             }
        }

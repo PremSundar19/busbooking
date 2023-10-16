@@ -183,7 +183,7 @@ if(isset($_POST['submit'])){
                         $updatedAvailability = $exAvailability - $counted;
                         $updateBus = "UPDATE bus SET availability=$updatedAvailability where busno=$busnumber";
                         mysqli_query($con,$updateBus);
-                        header("location:mesage.php");
+                        header("location:ticket_message.php");
                         exit;
         }
     }

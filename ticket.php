@@ -22,6 +22,11 @@ if(isset($_POST['booksubmit'])){
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+         body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        
         .seat {
             background-color: #38D3CA;
             border :1px solid black;
@@ -51,7 +56,7 @@ if(isset($_POST['booksubmit'])){
     <div class="container mt-5">
         <h1 class="text-center">Bus Seat Selection</h1>
         <div class="row mt-4">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-8  offset-md-2">
                 <div class="text-center">
                     <h2>Select Your Seat</h2>
                     <p>Available seats are marked in Lite Green</p>

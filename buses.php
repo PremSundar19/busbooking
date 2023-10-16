@@ -76,7 +76,7 @@ if (isset($_SESSION['userid'])) {
                     }
                 }else{
                     echo "<p>No buses found for entered location</p>";
-                    echo "<a href='login.php' name='sumbit'  class='btn btn-primary mb-2'>LOG IN</a>";
+                    echo "<a href='bus.php' name='sumbit'  class='btn btn-primary mb-2'>Home</a>";
                 }
         }
       

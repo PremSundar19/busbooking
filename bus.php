@@ -76,7 +76,7 @@ margin-top: 4rem;
                         <button type="submit" name="CANCELTICKETS" id="CANCELTICKETS" class="btn btn-default dropdown-item"  style=" color: black;">Cancel Tickets</button>
                         </form>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="logout.php">Logout</a>
+                        <a class="dropdown-item" href="logout_message.php">Logout</a>
                     </div>
                 </li>
             </ul>
