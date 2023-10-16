@@ -53,10 +53,10 @@ if (isset($_POST['USER'])) {
            if($row['status'] === "approved"){
                session_start();
                $_SESSION['userid'] = $id;
-               header("location:bus.php");
+               header("location:login_message.php");
                exit;
            }else{
-               $loginError =  "Your account is pending approval or has been rejected by the admin.";
+               $loginError = "Your account is pending approval or has been rejected by the admin.";
            }
         } else {
             $loginError = "Incorrect password. Please try again.";
