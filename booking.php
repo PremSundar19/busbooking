@@ -41,7 +41,7 @@ if (isset($_SESSION['userid'])) {
     <h1 class="text-center">Passenger Information</h1>
 </div>
 <?php if(isset($count)) { ?>
-        <?php for ($i = 0; $i < $count; $i++) { ?>
+        <?php for ($i = 0; $i < $count; $i++) {  ?>
             <div class="container mt-5">
     <form class="passenger-form" method='POST' action="booking.php">
         <input type="text" class="form-control" name="count" value="<?php echo $count; ?>" style='display: none;'>
@@ -120,17 +120,21 @@ if (isset($_SESSION['userid'])) {
             });
    });
 </script>
-<?php if(isset($_POST['submit'])){
+<?php
+ $seatAvailability = array_fill(11, 41, 'available');
+
+if(isset($_POST['submit'])){
         include_once('config.php');
         $busnumber = $_POST['busno'];
         $userId = $_SESSION['userid'];
         $from = $_SESSION['from'];
         $to = $_SESSION['to'];
         $counted = $_SESSION['count'];
-
+             
         if ($counted > 0) {
             for ($i = 0; $i < $counted; $i++) {
                 $seatNumber = $_POST['seatnumber'][$i]; 
+                $seatNum = $seatNumber;
                 $passengerName = $_POST['passengerName'][$i];
                 $passengerGender = $_POST['passengerGender'][$i];
                 $input = strtotime($_POST['dob'][$i]);
@@ -139,23 +143,28 @@ if (isset($_SESSION['userid'])) {
                 $updatedprice = doubleval($_POST['price1'][$i]) ; 
                 $from_loc = $_POST['from'][$i];
                 $to_loc = $_POST['to'][$i];
-                $seatnum = $seatNumber;
+                 
+                
 
+                 $rowSeat = "SELECT * FROM seat WHERE seatno=$seatNumber";
+                 $reslutRow = mysqli_query($con,$rowSeat);
+                 $row = mysqli_fetch_array($reslutRow);
 
+                 $rownumber = $row['rowno'];
 
-                echo $from_loc;
+                 if($rownumber % 2 == 0){
+                    $adjacentColumn = $seatNum % 2 === 0 ? $seatNum + 1 : $seatNum - 1;
+                 }else{
+                    $adjacentColumn = $seatNum % 2 === 0 ? $seatNum - 1 : $seatNum + 1;
+                 }
 
-                if($seatnum % 2 == 0){
-                    $seatnum++;
-                }else{
-                    $seatnum--;
-                }
-
-                 $fetchSeats = "SELECT * FROM seat WHERE seatno=$seatnum";
+                 $fetchSeats = "SELECT * FROM seat WHERE seatno=$adjacentColumn";
                  $seatResult =  mysqli_query($con,$fetchSeats);
                  $rowdata = mysqli_fetch_array($seatResult);
                     if($rowdata['status'] == '1'){
+
                         header('location:warningMessage.php');
+                        exit;
                     }else{
                         if($passengerGender === "female"){
                             $updateSeat = "UPDATE seat SET status=1 WHERE seatno=$seatNumber";
@@ -167,7 +176,7 @@ if (isset($_SESSION['userid'])) {
                     }
                 }
                 $boolean = true;
-                    if($boolean){
+                    if($passengerResult && $boolean){
                         $boolean = false;
                         $insertBus ="Select * from bus where busno=$busnumber";
                         $busResult = mysqli_query($con, $insertBus);
@@ -182,5 +191,6 @@ if (isset($_SESSION['userid'])) {
     }
 }
 ?>
+
 </body>
 </html>

@@ -10,6 +10,7 @@ if(isset($_POST['booksubmit'])){
    $busno = $_POST['busno'];
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -74,15 +75,15 @@ if(isset($_POST['booksubmit'])){
                         echo '<div class="md-2 ">';
                         for ($seat = 1; $seat <= $seatsPerRow; $seat++) {
                             if($seat == 1||$seat==2||$seat==3){
-                                echo '<button class="btn seat" id='.$row.$seat.' value='.$i.'>'.$i.'</button>';
+                                echo '<button class="btn seat" id='.$i.' value='.$i.'>'.$i.'</button>';
                                 $i++;
                               }else{
                                 if($seat == 4){
                                 echo "&emsp;&emsp;&emsp;";
-                                echo '<button class="btn seat"  id='.$row.$seat.' value='.$i.'>'.$i.'</button>';
+                                echo '<button class="btn seat"  id='.$i.' value='.$i.'>'.$i.'</button>';
                                 $i++;
                                 }else{
-                                    echo '<button class="btn seat"  id='.$row.$seat.'  value='.$i.'>'.$i.'</button>';
+                                    echo '<button class="btn seat"  id='.$i.'  value='.$i.'>'.$i.'</button>';
                                     $i++;
                                 }
                             }
@@ -94,7 +95,7 @@ if(isset($_POST['booksubmit'])){
                     <form action="booking.php" method="post">
                     <input type="hidden" name="selectedSeats" id="selectedSeatsInput">
                  <div class="text-center mt-4">
-                      <input type='number' name='price' id='price'  value="<?php echo $price; ?>" style='display: none;'>
+                      <input type='number' name='price' id='price'  value="<?php echo  $price; ?>" style='display: none;'>
                       <input type='text' name='busno' id='busno' value="<?php echo $busno; ?>" style='display: none;'>
                       <input id="bookSeatsButton" class="btn btn-primary" value="Book-Seats" type="submit" name="bookSeatsButton">
                      </div>
@@ -105,6 +106,7 @@ if(isset($_POST['booksubmit'])){
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <?php 
+   
     include_once("config.php");
     $sql = "SELECT * FROM passenger";
     $result = mysqli_query($con, $sql);

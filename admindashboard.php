@@ -16,6 +16,10 @@
     width: 145px; 
     display: inline-block;
     }
+    .logout{
+        float : right;
+      }
+
 
     </style>
 </head>
@@ -36,7 +40,8 @@
      ?>
 
 <div class="container">
-        <h2>Registered Users</h2>
+        <h2 style='display:inline' >Registered Users</h2> <a class="btn btn-primary logout" href="logout.php">Log Out</a>
+
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>

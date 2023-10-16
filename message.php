@@ -23,13 +23,14 @@
             <div class="col-md-6">
                 <div class="login-form">
                         <div class="alert alert-success "> Your Ticket Has Been Cancelled Successfully</div>
+                        <div class="alert alert-success ">Your amount will be credited withn 2 or 3 days.</div>
                     </div>
                 </div>
             </div>
         </div>
        <?php 
        session_start();
-       header("Refresh:2;url=usertickets.php?i=1");
+       header("Refresh:2;url=usertickets.php");
        ?>
     
 </body>

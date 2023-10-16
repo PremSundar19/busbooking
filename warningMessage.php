@@ -23,14 +23,16 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="login-form">
-                        <div class="alert alert-warning ">You Can't book this Ticket Please select another Ticket</div>
+                        <div class="alert alert-warning ">You Can't book this Ticket Please select another Ticket
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
        <?php 
        session_start();
-       header('location:ticket.php');
+       header('refresh:2;url=bus.php');
+       exit;
        ?>
 
 </body>

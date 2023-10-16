@@ -11,7 +11,12 @@
       .logout{
         float : right;
       }
-
+      
+      .home {
+  position:absolute;
+  top: 0px;
+  left:80%;
+}
     </style>
 </head>
 <body>
@@ -23,7 +28,9 @@ if (isset($_SESSION['userid'])) {
     ?>
 
 <div class="container mt-5">
-        <h2 style='display:inline'>Booked Tickets</h2><a class="btn btn-primary logout" href="logout.php">Log Out</a>
+        <h2 style='display:inline'>Booked Tickets</h2>
+        <a class="btn btn-primary home" href="bus.php">Home</a>
+        <a class="btn btn-primary logout" href="logout.php">Log Out</a>
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
@@ -32,7 +39,7 @@ if (isset($_SESSION['userid'])) {
                     <th>From_location</th>
                     <th>To_location</th>
                     <th>Price</th>
-                    <?php if(isset($_POST['CANCELTICKETS']) || $_GET['i'] == '1'){ ?>
+                    <?php if(isset($_POST['CANCELTICKETS'])){ ?>
                     <th>Ticket</th>
               <?php  } ?>
                   
@@ -52,7 +59,7 @@ if (isset($_SESSION['userid'])) {
                             echo "<td>" . $row["to_location"] . "</td>";
                             echo "<td>" . $row["price"] . "</td>";
                                
-                                if(isset($_POST['CANCELTICKETS']) ||  $_GET['i'] == '1'){
+                                if(isset($_POST['CANCELTICKETS'])){
                                     echo "<td>";
                                 echo "<div class='button-container'>";
                                 echo "<form method='post' action='usertickets.php'>";
@@ -76,7 +83,6 @@ if (isset($_SESSION['userid'])) {
        if(isset($_POST['CANCEL'])){
          $seatNumber = $_POST['seatno'];
          include_once('config.php');
-        
          $psql = "SELECT * FROM passenger where seatno=$seatNumber";
          $presult = mysqli_query($con,$psql);
          $prow = mysqli_fetch_array($presult);
