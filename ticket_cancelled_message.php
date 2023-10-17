@@ -8,22 +8,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-                .login-form {
+        .login-form {
             background-color: #fff;
             padding: 35px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
-
 </head>
 <body>
 <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="login-form">
-                        <div class="alert alert-success "> Your Ticket Has Been Cancelled Successfully! </div>
-                        <div class="alert alert-success ">Your amount will be credited withn 2 or 3 days.</div>
+                        <div class="alert alert-success"> Your Ticket Has Been Cancelled Successfully! </div>
+                        <div class="alert alert-success">Your amount will be credited withn 2 or 3 days.</div>
                     </div>
                 </div>
             </div>
@@ -31,6 +30,5 @@
        <?php 
        header("Refresh:2;url=cancel_ticket.php");
        ?>
-    
 </body>
 </html>

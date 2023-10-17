@@ -9,12 +9,12 @@
     $gender = $_POST['gender'];
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
     include('config.php');
-    $sql = "INSERT INTO register (name,email,phone,dob,age,gender,password) VALUES('$name','$email',$phone,'$dob',$age,'$gender','$password');";
-    if(mysqli_query($con,$sql)){
-        header("location:register_message.php");
+    $insertUser = "INSERT INTO register (name,email,phone,dob,age,gender,password) VALUES('$name','$email',$phone,'$dob',$age,'$gender','$password');";
+    if(mysqli_query($con,$insertUser)){
+        header('location:register_message.php');
         exit;
     }else{
-        echo "something Went Wrong";
+        echo 'something Went Wrong';
     }
   }
 ?>

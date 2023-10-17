@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
     <style>
         .button-container {
     width: 145px; 
@@ -19,29 +18,24 @@
     .logout{
         float : right;
       }
-
-
     </style>
 </head>
-
 <body>
      <?php
-     $conn = mysqli_connect("localhost","root","","busbooking");
+           include_once("config.php");
            if(isset($_POST["approve"])){
             $userId = $_POST["id"];
-            $updateSql = "UPDATE register SET status='approved' WHERE id=$userId";
-            mysqli_query($conn, $updateSql);
+            $updatePassenger = "UPDATE register SET status='approved' WHERE id=$userId";
+            mysqli_query($con, $updatePassenger);
            }
            else if(isset($_POST["reject"])){
             $userId = $_POST["id"];
-            $updateSql1 = " UPDATE register SET status = 'rejected' WHERE id = $userId";
-            mysqli_query($conn, $updateSql1);
+            $updatePassenger = " UPDATE register SET status = 'rejected' WHERE id = $userId";
+            mysqli_query($con, $updatePassenger);
            }
      ?>
-
 <div class="container">
         <h2 style='display:inline' >Registered Users</h2> <a class="btn btn-primary logout" href="logout_message.php">Log Out</a>
-
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
@@ -56,11 +50,10 @@
             <tbody>
                 <?php
                 include_once('config.php');
-                $sql = "SELECT *  FROM register";
-                $result = mysqli_query($conn,$sql);
-              
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_array($result)) {
+                $passengers = "SELECT *  FROM register";
+                $passengersResult = mysqli_query($con,$passengers);
+                if (mysqli_num_rows($passengersResult) > 0) {
+                    while ($row = mysqli_fetch_array($passengersResult)) {
                         if($row["status"] == "pending"){
                             echo "<tr>";
                             echo "<td>" . $row["name"] . "</td>";
@@ -80,13 +73,11 @@
                             }
                             echo "</td>";
                             echo "</tr>";
-    
                         }    
                     }
                 } else {
                     echo "<tr><td colspan='6'>No records found</td></tr>";
                 }
-
                 ?>
             </tbody>
         </table>    

@@ -22,7 +22,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="login-form">
-                        <div class="alert alert-success ">Logged in Successfully!!</div>
+                        <div class="alert alert-success" role="alert">Logged in Successfully!!</div>
                     </div>
                 </div>
             </div>
@@ -30,6 +30,5 @@
        <?php 
        header("Refresh:2;bus.php");
        ?>
-    
 </body>
 </html>
