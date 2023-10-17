@@ -11,8 +11,6 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-
-        
         body {
             background-image: url('login_bc.jpeg');
             background-size: cover;
@@ -26,11 +24,9 @@
         .container {
             margin-top: 50px;
         }
-
         .login-form {
             background-color: #fff;
             background-attachment: fixed;
-
             padding: 35px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -43,8 +39,9 @@ if (isset($_POST['USER'])) {
     $name = $_POST['name']; 
     $password = $_POST['password'];
     include_once('config.php');
-    $query = "SELECT * FROM register WHERE name = '$name'";
-    $result = mysqli_query($con, $query);
+    $fetchUser = "SELECT * FROM register WHERE name = '$name'";
+    $result = mysqli_query($con, $fetchUser);
+
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
         $storedHashedPassword = $row['password'];
@@ -79,8 +76,6 @@ if (isset($_POST['USER'])) {
     }
 }
 ?>
-
-
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -112,6 +107,5 @@ if (isset($_POST['USER'])) {
             </div>
         </div>
     </div>
-
 </body>
 </html>

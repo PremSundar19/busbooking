@@ -20,7 +20,7 @@ if (!isset($_SESSION['userid'])) {
     <style>
     body{ 
             background-color: powderblue;
-        }
+}
     </style>
 </head>
 <body> 
@@ -49,8 +49,8 @@ if (!isset($_SESSION['userid'])) {
                 $to =  strtolower($_POST['to']);
                 $date = $_POST['date'];
                 
-                $sql = "SELECT * FROM bus WHERE `from_loc`='$from' AND `to_loc`='$to'";
-                $result = mysqli_query($con,$sql);
+                $fetchBus = "SELECT * FROM bus WHERE `from_loc`='$from' AND `to_loc`='$to'";
+                $result = mysqli_query($con,$fetchBus);
                 $count = 0;
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
@@ -75,7 +75,6 @@ if (!isset($_SESSION['userid'])) {
                         }else{
                             echo "<td><input type='submit' name='booksubmit' value='BOOK' class='btn btn-primary mb-2'></td>";
                         }
-
                         echo "</tr>";
                         $_SESSION['from'] = $row['from_loc'];
                         $_SESSION['to'] = $row['to_loc'];
@@ -85,11 +84,9 @@ if (!isset($_SESSION['userid'])) {
                     echo "<a href='bus.php' name='sumbit'  class='btn btn-primary mb-2'>Home</a>";
                 }
         }
-      
             ?>      
         </tbody>
         </table>
     </div>
-
 </body>
 </html>

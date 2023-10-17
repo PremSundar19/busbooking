@@ -49,9 +49,8 @@
             </thead>
             <tbody>
                 <?php
-                include_once('config.php');
-                $passengers = "SELECT *  FROM register";
-                $passengersResult = mysqli_query($con,$passengers);
+                $fetchPassengers = "SELECT *  FROM register";
+                $passengersResult = mysqli_query($con,$fetchPassengers);
                 if (mysqli_num_rows($passengersResult) > 0) {
                     while ($row = mysqli_fetch_array($passengersResult)) {
                         if($row["status"] == "pending"){
