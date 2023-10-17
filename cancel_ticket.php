@@ -76,7 +76,6 @@ $userId = $_SESSION['userid'] ;
     <?php 
        if(isset($_POST['CANCEL'])){
          $seatNumber = $_POST['seatno'];
-         include_once('config.php');
          $psql = "SELECT * FROM passenger where seatno=$seatNumber";
          $presult = mysqli_query($con,$psql);
          $prow = mysqli_fetch_array($presult);

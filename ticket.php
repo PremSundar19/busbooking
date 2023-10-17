@@ -73,16 +73,13 @@ if(isset($_POST['booksubmit'])){
                         echo '<div class="md-2 ">';
                         for ($seat = 1; $seat <= $seatsPerRow; $seat++) {
                             if($seat == 1||$seat==2||$seat==3){
-                                echo '<button class="btn seat" id='.$i.' value='.$i.'>'.$i.'</button>';
-                                $i++;
+                                echo '<button class="btn seat" id='.$row.$seat.' value='.$row.$seat.'>'.$row.$seat.'</button>';
                               }else{
                                 if($seat == 4){
                                 echo "&emsp;&emsp;&emsp;";
-                                echo '<button class="btn seat"  id='.$i.' value='.$i.'>'.$i.'</button>';
-                                $i++;
+                                echo '<button class="btn seat"  id='.$row.$seat.' value='.$row.$seat.'>'.$row.$seat.'</button>';
                                 }else{
-                                    echo '<button class="btn seat"  id='.$i.'  value='.$i.'>'.$i.'</button>';
-                                    $i++;
+                                    echo '<button class="btn seat"  id='.$row.$seat.'  value='.$row.$seat.'>'.$row.$seat.'</button>';
                                 }
                             }
                         }
