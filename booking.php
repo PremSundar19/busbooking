@@ -16,11 +16,11 @@ if(isset($_POST['submit'])){
                 $seatNumber = $_POST['seatnumber'][$i]; $seatNum = $seatNumber; $passengerName = $_POST['passengerName'][$i];$passengerGender = $_POST['passengerGender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];
                 
                 $before = $seatNum - 1; $after = $seatNum + 1;
-                $beforeSeat = "SELECT * FROM passenger WHERE seatno=$before";
+                $beforeSeat = "SELECT gender FROM passenger WHERE seatno=$before";
                 $beforeSeatResult =  mysqli_query($con,$beforeSeat);
                 $beforeRowData = mysqli_fetch_array($beforeSeatResult);
 
-                $afterSeat = "SELECT * FROM passenger WHERE seatno=$after";
+                $afterSeat = "SELECT gender FROM passenger WHERE seatno=$after";
                 $afterSeatResult =  mysqli_query($con,$afterSeat);
                 $afterRowData = mysqli_fetch_array($afterSeatResult);
 
@@ -35,7 +35,7 @@ if(isset($_POST['submit'])){
                $boolean = true;
                    if($passengerResult && $boolean){
                        $boolean = false;
-                       $fetchBus ="Select * from bus where busno=$busnumber";
+                       $fetchBus ="Select availability from bus where busno=$busnumber";
                        $busResult = mysqli_query($con, $fetchBus);
                        $busRows = mysqli_fetch_array($busResult);
                        $exAvailability = $busRows['availability'];
@@ -54,7 +54,7 @@ if(isset($_POST['submit'])){
                $boolean = true;
                    if($passengerResult && $boolean){
                        $boolean = false;
-                       $fetchBus ="Select * from bus where busno=$busnumber";
+                       $fetchBus ="Select availability from bus where busno=$busnumber";
                        $busResult = mysqli_query($con, $fetchBus);
                        $busRows = mysqli_fetch_array($busResult);
                        $exAvailability = $busRows['availability'];

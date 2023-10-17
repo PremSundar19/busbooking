@@ -24,10 +24,6 @@
         .button-container {
     width: 145px; 
     }
-    .button-container1 {
-    width: 145px; 
-    display: inline-block;
-    }
     .logout{
         float : right;
       }

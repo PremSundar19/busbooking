@@ -1,3 +1,11 @@
+<?php 
+session_start();
+$userId = $_SESSION['userid'] ;
+if (!isset($_SESSION['userid'])) {
+  header("Location: login.php");
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,10 +27,6 @@
     </style>
 </head>
 <body>
-<?php 
-session_start();
-$userId = $_SESSION['userid'] ;
-    ?>
 <div class="container mt-5">
         <h2 style='display:inline'>Booked Tickets</h2>
         <a class="btn btn-primary home" href="bus.php">Home</a>
@@ -71,15 +75,15 @@ $userId = $_SESSION['userid'] ;
     <?php 
        if(isset($_POST['CANCEL'])){
          $seatNumber = $_POST['seatno'];
-         $fetchPassengerQuery = "SELECT * FROM passenger where seatno=$seatNumber";
+         $fetchPassengerQuery = "SELECT bus_id,seatno FROM passenger where seatno=$seatNumber";
          $passengerResult = mysqli_query($con,$fetchPassengerQuery);
          $prow = mysqli_fetch_array($passengerResult);
          $busno = $prow['bus_id'];
-         $seatno = $prow['seatno'];
+
         $deletePassenger = "DELETE FROM passenger WHERE seatno=$seatNumber";
         $result = mysqli_query($con,$deletePassenger);
             if($result){
-                $fetchBus = "SELECT * FROM bus where busno=$busno";
+                $fetchBus = "SELECT availability FROM bus where busno=$busno";
                 $busResult = mysqli_query($con,$fetchBus);
                 $brow = mysqli_fetch_array($busResult);
                 $exAvailability = $brow['availability'];
