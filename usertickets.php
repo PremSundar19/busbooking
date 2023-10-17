@@ -1,3 +1,11 @@
+<?php 
+session_start();
+$userId = $_SESSION['userid'] ;
+if (!isset($_SESSION['userid'])) {
+  header("Location: login.php");
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,15 +28,6 @@
     </style>
 </head>
 <body>
-<?php 
-session_start();
-$userId = $_SESSION['userid'] ;
-if (!isset($_SESSION['userid'])) {
-  header("Location: login.php");
-  exit;
-}
-    ?>
-
 <div class="container mt-5">
         <h2 style='display:inline'>Booked Tickets</h2>
         <a class="btn btn-primary home" href="bus.php">Home</a>

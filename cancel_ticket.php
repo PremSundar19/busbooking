@@ -68,7 +68,6 @@ $userId = $_SESSION['userid'] ;
             </tbody>
         </table>    
     </div>
-
     <?php 
        if(isset($_POST['CANCEL'])){
          $seatNumber = $_POST['seatno'];
@@ -77,7 +76,6 @@ $userId = $_SESSION['userid'] ;
          $prow = mysqli_fetch_array($passengerResult);
          $busno = $prow['bus_id'];
          $seatno = $prow['seatno'];
-         
         $deletePassenger = "DELETE FROM passenger WHERE seatno=$seatNumber";
         $result = mysqli_query($con,$deletePassenger);
             if($result){

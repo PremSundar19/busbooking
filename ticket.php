@@ -1,21 +1,15 @@
-
 <?php 
-
 session_start();
   $userId = $_SESSION['userid'] ;
 if (!isset($_SESSION['userid'])) {
     header("Location: login.php");
     exit;
 }
-
 if(isset($_POST['booksubmit'])){
    $price = $_POST['price'];
    $busno = $_POST['busno'];
 }
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,30 +23,24 @@ if(isset($_POST['booksubmit'])){
             background-color: #f4f4f4;
             font-family: Arial, sans-serif;
         }
-        
         .seat {
             background-color: #38D3CA;
             border :1px solid black;
             color :white;
         }
-
         .selected {
             background-color: #F1F26E ;
             color: black;
         }
-
         .pink {
             background-color: #DE39C7 ;
             color: #fff;
             cursor: not-allowed;
         }
-
         .disabled {
             background-color: #F85958;
             cursor: not-allowed;
         }
-        
-        
     </style>
 </head>
 <body>
@@ -148,6 +136,5 @@ if(isset($_POST['booksubmit'])){
         });
     });
 </script>
-
 </body>
 </html>

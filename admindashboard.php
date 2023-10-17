@@ -1,3 +1,16 @@
+<?php
+           include_once("config.php");
+           if(isset($_POST["approve"])){
+            $userId = $_POST["id"];
+            $updatePassenger = "UPDATE register SET status='approved' WHERE id=$userId";
+            mysqli_query($con, $updatePassenger);
+           }
+           else if(isset($_POST["reject"])){
+            $userId = $_POST["id"];
+            $updatePassenger = " UPDATE register SET status = 'rejected' WHERE id = $userId";
+            mysqli_query($con, $updatePassenger);
+           }
+     ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,19 +34,6 @@
     </style>
 </head>
 <body>
-     <?php
-           include_once("config.php");
-           if(isset($_POST["approve"])){
-            $userId = $_POST["id"];
-            $updatePassenger = "UPDATE register SET status='approved' WHERE id=$userId";
-            mysqli_query($con, $updatePassenger);
-           }
-           else if(isset($_POST["reject"])){
-            $userId = $_POST["id"];
-            $updatePassenger = " UPDATE register SET status = 'rejected' WHERE id = $userId";
-            mysqli_query($con, $updatePassenger);
-           }
-     ?>
 <div class="container">
         <h2 style='display:inline' >Registered Users</h2> <a class="btn btn-primary logout" href="logout_message.php">Log Out</a>
         <table class="table table-striped table-bordered table-hover">

@@ -5,7 +5,6 @@ if (!isset($_SESSION['userid'])) {
     header("Location: login.php");
     exit;
 }
-
 ?>  
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +19,6 @@ if (!isset($_SESSION['userid'])) {
     width: 7rem;
     font-weight: bolder;
   }
-
 body {
     background-image: url('bus.jpeg');
     background-size: cover;
@@ -74,7 +72,6 @@ margin-top: 4rem;
                         <form action="usertickets.php" method="post">
                         <button type="submit" name="viewtickets" id="viewtickets" class="btn btn-default dropdown-item"  style=" color: black;">View Bookings</button>
                         </form>
-
                         <form action="cancel_ticket.php" method="post">
                         <button type="submit" name="CANCELTICKETS" id="CANCELTICKETS" class="btn btn-default dropdown-item"  style=" color: black;">Cancel Tickets</button>
                         </form>
@@ -104,7 +101,6 @@ margin-top: 4rem;
             <div class="form-group" >
                 <button type="submit" name="SEARCH" id="SEARCH" class="btn btn-default Search"  style="background-color: chocolate; color: white;">SEARCH</button>
             </div>
-            
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
