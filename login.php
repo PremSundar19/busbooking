@@ -5,7 +5,6 @@ if (isset($_POST['USER'])) {
     include_once('config.php');
     $fetchUser = "SELECT id,password,status FROM register WHERE name = '$name'";
     $result = mysqli_query($con, $fetchUser);
-
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
         $storedHashedPassword = $row['password'];

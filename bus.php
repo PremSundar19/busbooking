@@ -51,7 +51,7 @@ margin-top: 4rem;
 </style>
 </head>
 <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-expand">
+        <nav class="navbar navbar-expand-lg  navbar-light bg-light fixed-top">
         <span class="navbar-brand" href="#">
             <img src="bus_logo1.png" width="50" height="50" class="mr-2">
             Bus Booking
