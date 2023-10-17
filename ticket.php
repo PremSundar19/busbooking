@@ -43,6 +43,10 @@ if(isset($_POST['booksubmit'])){
             background-color: #F85958;
             cursor: not-allowed;
         }
+        .demo{
+            display:none;
+        }
+        
     </style>
 </head>
 <body>
@@ -77,7 +81,7 @@ if(isset($_POST['booksubmit'])){
                               }else{
                                 if($seat == 4){
                                 echo "&emsp;&emsp;&emsp;";
-                                echo '<button class="btn seat"  id='.$row.$seat.' value='.$row.$seat.'>'.$row.$seat.'</button>';
+                              echo '<button class="btn seat"  id='.$row.$seat.' value='.$row.$seat.'>'.$row.$seat.'</button>';
                                 }else{
                                     echo '<button class="btn seat"  id='.$row.$seat.'  value='.$row.$seat.'>'.$row.$seat.'</button>';
                                 }
