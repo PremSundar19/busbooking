@@ -56,6 +56,7 @@ if (isset($_POST['USER'])) {
             background-attachment: fixed;
             background-repeat: no-repeat;
             background-position: center;
+            font-family: Arial, sans-serif;
             display: flex;
             align-items: center;
             height: 75vh;
@@ -96,7 +97,7 @@ if (isset($_POST['USER'])) {
                             <input type="submit" name="USER" value="User Log In" class="btn btn-primary btn-block">
                             </div>
                             <div class="col-md-6">
-                            <input type="submit" name="ADMIN" value="Admin Log In" class="btn btn-primary btn-block">
+                            <input type="submit" na5me="ADMIN" value="Admin Log In" class="btn btn-primary btn-block">
                             </div>
                         </div>                       
                     </form>

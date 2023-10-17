@@ -19,12 +19,14 @@ if (!isset($_SESSION['userid'])) {
     width: 7rem;
     font-weight: bolder;
   }
+ 
 body {
     background-image: url('bus.jpeg');
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center;
+    /* font-family: Arial, sans-serif; */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -60,7 +62,7 @@ margin-top: 4rem;
             <ul class="navbar-nav ml-auto"> 
                  <li class="nav-item">
                     <span class="nav-link" href="#">
-                        <img src="help_logo.png" alt="Help" width="30" height="30" class="mr-2">help
+                        <img src="help_logo.png" alt="Help" width="30" height="30" class="mr-2">Help
                     </span>
                 </li> 
                 <li class="nav-item dropdown">
@@ -87,15 +89,15 @@ margin-top: 4rem;
         <form class="form-inline"  action="buses.php" method="post">
             <div class="form-group">
                 <label for="from">From : &ensp;</label>
-                <input type="text" class="form-control" id="from" name="from">
+                <input type="text" class="form-control" id="from" name="from" required>
             </div>
             <div class="form-group">
                 <label for="to">&ensp;To :&ensp; </label>
-                <input type="text" class="form-control" id="to" name="to">
+                <input type="text" class="form-control" id="to" name="to"  required>
             </div>
             <div class="form-group">
                 <label for="TravelDate">&ensp;Travel Date : &ensp;</label>
-                <input type="date" class="form-control" id="date" name="date">
+                <input type="date" class="form-control" id="date" name="date"  required>
                 &ensp;
             </div>
             <div class="form-group" >

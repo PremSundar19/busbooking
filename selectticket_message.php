@@ -12,7 +12,7 @@
             background-color: #f4f4f4;
             font-family: Arial, sans-serif;
         }
-        .ticket{
+        .cancel{
             background-color: #fff;
             padding: 35px;
             border-radius: 5px;
@@ -24,15 +24,17 @@
 <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="ticket">
-                        <div class="alert alert-success"> Your Ticket Has Been Cancelled Successfully! </div>
-                        <div class="alert alert-success">Your amount will be credited within 2 or 3 days.</div>
+                <div class="cancel">
+                        <div class="alert alert-warning ">Please Select Atleast one ticket
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
        <?php 
-       header("Refresh:2;url=cancel_ticket.php");
+       session_start();
+       header('refresh:1;url=ticket.php');
+       exit;
        ?>
 </body>
 </html>

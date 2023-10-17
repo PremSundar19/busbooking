@@ -34,6 +34,7 @@
             background-attachment: fixed;
             background-repeat: no-repeat;
             background-position: center;
+            font-family: Arial, sans-serif;
             display: flex;
             align-items: center;
             height: 100vh;

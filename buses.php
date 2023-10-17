@@ -17,14 +17,18 @@ if (!isset($_SESSION['userid'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-    body{ 
+        body {
             background-color: powderblue;
-}
+            font-family: Arial, sans-serif;
+        }
+  .back{
+    float : right;
+  }
     </style>
 </head>
 <body> 
     <div class="container mt-4">
-        <h2>Bus Information</h2>
+        <h2  style='display:inline'>Bus Information</h2><a class="btn btn-primary back" href="bus.php">Back</a>
         <table class="table table-striped table-bordered table-hover" >
             <thead>
                 <tr>
@@ -79,8 +83,7 @@ if (!isset($_SESSION['userid'])) {
                         $_SESSION['to'] = $row['to_loc'];
                     }
                 }else{
-                    echo "<p>No buses found for entered location</p>";
-                    echo "<a href='bus.php' name='sumbit'  class='btn btn-primary mb-2'>Home</a>";
+                    header("Location: bus_message.php");
                 }
         }
             ?>      

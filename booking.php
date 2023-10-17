@@ -48,8 +48,24 @@ if(isset($_POST['submit'])){
         }elseif($counted >=2){
             for ($i = 0; $i < $counted; $i++) {
                 $seatNumber = $_POST['seatnumber'][$i]; $seatNum = $seatNumber; $passengerName = $_POST['passengerName'][$i];$passengerGender = $_POST['passengerGender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];
-                        $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
-                        $passengerResult =  mysqli_query($con,$insertPassenger);
+                     
+                $before = $seatNum - 1; $after = $seatNum + 1;
+                $beforeSeat = "SELECT gender FROM passenger WHERE seatno=$before";
+                $beforeSeatResult =  mysqli_query($con,$beforeSeat);
+                $beforeRowData = mysqli_fetch_array($beforeSeatResult);
+
+                $afterSeat = "SELECT gender FROM passenger WHERE seatno=$after";
+                $afterSeatResult =  mysqli_query($con,$afterSeat);
+                $afterRowData = mysqli_fetch_array($afterSeatResult);
+                
+                if(($beforeRowData['gender'] === 'female' && $afterRowData['gender'] === 'female') || $beforeRowData['gender'] === 'female'|| $afterRowData['gender'] === 'female' && ){
+                    header('location:warningMessage.php');
+                    exit;
+                }else{
+                     $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
+                     $passengerResult =  mysqli_query($con,$insertPassenger);
+                }
+
                }
                $boolean = true;
                    if($passengerResult && $boolean){
@@ -77,6 +93,10 @@ if(isset($_POST['submit'])){
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <style>
+         body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
         .container {
             margin-top: 50px;
         }
@@ -103,7 +123,7 @@ if(isset($_POST['submit'])){
 <div class="row justify-content-center">
     <h1 class="text-center">Passenger Information</h1>
 </div>
-<?php if(isset($count)) { ?>
+<?php if($count > 0) { ?>
         <?php for ($i = 0; $i < $count; $i++) {  ?>
             <div class="container mt-5">
     <form class="passenger-form" method='POST' action="booking.php">
@@ -162,7 +182,9 @@ if(isset($_POST['submit'])){
         </div>
     </form>
 </div>
-<?php } ?>
+<?php }  else{
+             header("Location:selectticket_message.php");
+        } ?>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script>

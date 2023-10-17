@@ -16,6 +16,7 @@ if(isset($_POST['booksubmit'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bus Ticket Seat Selection</title>
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
          body {
@@ -76,10 +77,11 @@ if(isset($_POST['booksubmit'])){
                 </div>
                     <form action="booking.php" method="post">
                     <input type="hidden" name="selectedSeats" id="selectedSeatsInput">
-                 <div class="text-center mt-4">
+                      <div class="text-center mt-4">
                       <input type='number' name='price' id='price'  value="<?php echo  $price; ?>" style='display: none;'>
                       <input type='text' name='busno' id='busno' value="<?php echo $busno; ?>" style='display: none;'>
                       <input id="bookSeatsButton" class="btn btn-primary" value="Book-Seats" type="submit" name="bookSeatsButton">
+                      <a class="btn btn-primary back" href="bus.php">Back</a>
                      </div>
             </div>
         </div>
