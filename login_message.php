@@ -31,7 +31,7 @@
             </div>
         </div>
        <?php 
-       header("Refresh:2;bus.php");
+       header("Refresh:2;ticket.php");
        ?>
 </body>
 </html>

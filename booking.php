@@ -58,14 +58,16 @@ if(isset($_POST['submit'])){
                 $afterSeatResult =  mysqli_query($con,$afterSeat);
                 $afterRowData = mysqli_fetch_array($afterSeatResult);
                 
-                if(($beforeRowData['gender'] === 'female' && $afterRowData['gender'] === 'female') || $beforeRowData['gender'] === 'female'|| $afterRowData['gender'] === 'female' && ){
+               if($beforeRowData['gender'] === 'female' && $afterRowData['gender'] === 'female'){
+                   header("location:warningMessage.php");
+                   exit;
+               } else if( ($beforeRowData['gender'] === 'female' && $passengerGender !== 'female')||($afterRowData['gender'] === 'female'  && $passengerGender !== 'female')){
                     header('location:warningMessage.php');
                     exit;
                 }else{
                      $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
                      $passengerResult =  mysqli_query($con,$insertPassenger);
                 }
-
                }
                $boolean = true;
                    if($passengerResult && $boolean){

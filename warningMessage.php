@@ -33,7 +33,7 @@
         </div>
        <?php 
        session_start();
-       header('refresh:2;url=bus.php');
+       header('refresh:1;url=ticket.php');
        exit;
        ?>
 </body>
