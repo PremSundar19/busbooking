@@ -72,7 +72,6 @@ if(isset($_POST['booksubmit'])){
                     <?php
                     $totalRows = 8; 
                     $seatsPerRow = 5;
-                    $i = 11;
                     for ($row = 1;$row <= $totalRows; $row++) {
                         echo '<div class="md-2 ">';
                         for ($seat = 1; $seat <= $seatsPerRow; $seat++) {
@@ -80,8 +79,8 @@ if(isset($_POST['booksubmit'])){
                                 echo '<button class="btn seat" id='.$row.$seat.' value='.$row.$seat.'>'.$row.$seat.'</button>';
                               }else{
                                 if($seat == 4){
-                                echo "&emsp;&emsp;&emsp;";
-                              echo '<button class="btn seat"  id='.$row.$seat.' value='.$row.$seat.'>'.$row.$seat.'</button>';
+                                  echo "&emsp;&emsp;&emsp;";
+                                  echo '<button class="btn seat"  id='.$row.$seat.' value='.$row.$seat.'>'.$row.$seat.'</button>';
                                 }else{
                                     echo '<button class="btn seat"  id='.$row.$seat.'  value='.$row.$seat.'>'.$row.$seat.'</button>';
                                 }
