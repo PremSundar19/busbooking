@@ -70,34 +70,80 @@ if(isset($_POST['submit'])){
             }
         }
     }elseif($counted >= 2){
+        $formData = array();
         for ($i = 0; $i < $counted; $i++) {
             $seatNumber = $_POST['seatnumber'][$i]; $seatNum = $seatNumber; $passengerName = $_POST['passengerName'][$i];$passengerGender = $_POST['passengerGender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];
-           
-            $before = $seatNum - 1; $after = $seatNum + 1;
-            $beforeSeat = "SELECT gender FROM passenger WHERE seatno=$before";
-            $beforeSeatResult =  mysqli_query($con,$beforeSeat);
-            $beforeRowData = mysqli_fetch_array($beforeSeatResult);
 
-            $afterSeat = "SELECT gender FROM passenger WHERE seatno=$after";
-            $afterSeatResult =  mysqli_query($con,$afterSeat);
-            $afterRowData = mysqli_fetch_array($afterSeatResult);
+            // $before = $seatNum - 1; $after = $seatNum + 1;
+            // $beforeSeat = "SELECT gender FROM passenger WHERE seatno=$before";
+            // $beforeSeatResult =  mysqli_query($con,$beforeSeat);
+            // $beforeRowData = mysqli_fetch_array($beforeSeatResult);
+
+            // $afterSeat = "SELECT gender FROM passenger WHERE seatno=$after";
+            // $afterSeatResult =  mysqli_query($con,$afterSeat);
+            // $afterRowData = mysqli_fetch_array($afterSeatResult);
     
     
-            if(($beforeRowData['gender'] === 'female' && $passengerGender !== 'female')||($afterRowData['gender'] === 'female'  && $passengerGender !== 'female')){
-                header('location:warningMessage.php');
-                exit;
-            }else{
-                 $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
-                 $passengerResult =  mysqli_query($con,$insertPassenger);
+            // if(($beforeRowData['gender'] === 'female' && $passengerGender !== 'female')||($afterRowData['gender'] === 'female'  && $passengerGender !== 'female')){
+            //     header('location:warningMessage.php');
+            //     exit;
+            // }else{
+            //      $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
+            //      $passengerResult =  mysqli_query($con,$insertPassenger);
+            //      if($passengerResult){
+            //         $exAvailability = seatAvailability($con,$busnumber);
+            //         $updatedAvailability = $exAvailability - 1;
+            //         updateBus($con,$updatedAvailability,$busnumber);
+            //    }
+            // }
+            
+            $formData[] = array(
+                'seatNumber' => $seatNumber,
+                'passengerName' => $passengerName,
+                'passengerGender' => $passengerGender,
+                'dob' => $dob,
+                'age' => $age,
+                'updatedprice' => $updatedprice,
+                'from_loc' => $from_loc,
+                'to_loc' => $to_loc,
+                'userId'=> $userId,
+                'busId'=>$busnumber
+            );
+        }
+        //  echo count($formData);
+
+            for($j=0;$j<count($formData);$j++){
+
+                $gender = $formData[0]['passengerGender'];
+                //   echo $gender;
+                if($gender === 'male'){
+                    header('Location.warningMessage.php');
+                    exit;
+                }else{
+                    
+                    $seat_number = $formData[$j]['seatNumber'];
+                    $passenger_name = $formData[$j]['passengerName'];
+                    $passenger_gender = $formData[$j]['passengerGender'];
+                    $passenger_dob = $formData[$j]['dob'];
+                    $passenger_age = $fo rmData[$j]['age'];
+                    $passenger_price = $formData[$j]['updateprice'];
+                    $passenger_from = $formData[$j]['from_loc'];
+                    $passenger_to = $formData[$j]['to_loc'];
+                    $user_Id = $formData[$j]['userId'];
+                    $busId = $formData[$j]['busId'];
+
+                  $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id)  VALUES($seat_number,'$passenger_name','$passenger_gender','$passenger_dob',$passenger_age,'$passenger_from','$passenger_to_loc',$passenegr_price,$user_Id,$busId)";
+                  $passengerResult =  mysqli_query($con,$insertPassenger);
                  if($passengerResult){
                     $exAvailability = seatAvailability($con,$busnumber);
                     $updatedAvailability = $exAvailability - 1;
                     updateBus($con,$updatedAvailability,$busnumber);
-               }
+               } 
+                }
+
             }
-        }
             header("location:ticket_message.php");
-            exit;
+            exit;  
     }
 }
 function femaleSeat($con,$seatNumber){
@@ -158,7 +204,7 @@ function updateBus($con,$updatedAvailability,$busnumber){
 <div class="row justify-content-center">
     <h1 class="text-center">Passenger Information</h1>
 </div>
-<?php if($count > 0) { ?>
+<?php if(isset($count) > 0) { ?>
         <?php for ($i = 0; $i < $count; $i++) {  ?>
             <div class="container mt-5">
     <form class="passenger-form" method='POST' action="booking.php">
@@ -217,9 +263,7 @@ function updateBus($con,$updatedAvailability,$busnumber){
         </div>
     </form>
 </div>
-<?php }  else{
-             header("Location:selectticket_message.php");
-        } ?>
+<?php }   ?>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script>
