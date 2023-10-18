@@ -61,22 +61,20 @@ if(isset($_POST['submit'])){
                if($beforeRowData['gender'] === 'female' && $afterRowData['gender'] === 'female'){
                    header("location:warningMessage.php");
                    exit;
-               } else if( ($beforeRowData['gender'] === 'female' && $passengerGender !== 'female')||($afterRowData['gender'] === 'female'  && $passengerGender !== 'female')){
+               } else if(($beforeRowData['gender'] === 'female' && $passengerGender !== 'female')||($afterRowData['gender'] === 'female'  && $passengerGender !== 'female')){
                     header('location:warningMessage.php');
                     exit;
                 }else{
                      $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
                      $passengerResult =  mysqli_query($con,$insertPassenger);
                 }
-               }
-               $boolean = true;
-                   if($passengerResult && $boolean){
-                       $boolean = false;
+            }
+                   if($passengerResult){
                        $fetchBus ="Select availability from bus where busno=$busnumber";
                        $busResult = mysqli_query($con, $fetchBus);
                        $busRows = mysqli_fetch_array($busResult);
                        $exAvailability = $busRows['availability'];
-                       $updatedAvailability = $exAvailability - $counted;
+                       $updatedAvailability = $exAvailability - 1;
                        $updateBus = "UPDATE bus SET availability=$updatedAvailability where busno=$busnumber";
                        mysqli_query($con,$updateBus);
                        header("location:ticket_message.php");
@@ -198,7 +196,7 @@ if(isset($_POST['submit'])){
          var age = today.getFullYear() - dob.getFullYear();
              if(dob > today){
                 $(this).closest('.passengerform').find('#dobError').text('Please Select Proper Date');
-             }else{
+             }else{ 
                 $(this).closest('.passengerform').find('#dobError').text('');
                 if (today.getMonth() < dob.getMonth() || (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) {
               age--;

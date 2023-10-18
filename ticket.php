@@ -118,7 +118,7 @@ if(isset($_POST['booksubmit'])){
         }
         if($row['gender'] === 'female'){
             $femaleSeats[] = $row['seatno'];
-        }
+        } 
     }
 ?>
 <script>
