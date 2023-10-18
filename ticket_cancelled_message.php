@@ -32,7 +32,7 @@
             </div>
         </div>
        <?php 
-       header("Refresh:2;url=cancel_ticket.php");
+       header("Refresh:1;url=cancel_ticket.php");
        ?>
 </body>
 </html>

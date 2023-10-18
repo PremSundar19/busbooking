@@ -94,7 +94,7 @@ if (!isset($_SESSION['userid'])) {
                 $updatedAvailability = $exAvailability + 1;
                 $updatePassenger = "UPDATE bus SET availability=$updatedAvailability where busno=$busno";
                 mysqli_query($con,$updatePassenger);
-                header("location:ticket_cancelled_message.php");
+                header("Location:ticket_cancelled_message.php");
                 exit;
             }
        }
