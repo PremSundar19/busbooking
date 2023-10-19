@@ -2,8 +2,8 @@
 session_start();
 $userId = $_SESSION['userid'] ;
 if (!isset($_SESSION['userid'])) {
-  header("location:login.php");
-  exit;
+//   header("location:login.php");
+//   exit;
 }
 ?>
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ if (!isset($_SESSION['userid'])) {
       .home {
   position:absolute;
   top: 0px;
-  left:80%;
+  left: 75%;
 }
     </style>
 </head>
@@ -94,7 +94,7 @@ if (!isset($_SESSION['userid'])) {
                 $updatedAvailability = $exAvailability + 1;
                 $updateQuery = "UPDATE bus SET availability=$updatedAvailability where busno=$busno";
                 mysqli_query($con,$updateQuery);
-                header("location:ticket_cancelled_message.php");
+                header("location:ticketCancelledMessage.php");
                 exit;
             }
        }

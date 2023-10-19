@@ -27,7 +27,7 @@ if (!isset($_SESSION['userid'])) {
       .home {
   position:absolute;
   top: 0px;
-  left:80%;
+  left:75%;
 }
     </style>
 </head>

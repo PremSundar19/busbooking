@@ -60,8 +60,10 @@ if(isset($_POST['submit'])){
                 $before = $seatNum - 1; $after = $seatNum + 1;
                 $femaleBefore = femaleSeat($con,$after);
                 $femaleBefore = femaleSeat($con,$before);
-                if(($femaleBefore &&  $passengerGender !== "female")|| ($femaleAfter && $passengerGender !== "female")){
-                       warningMessage();
+                   if(($femaleAfter && $passengerGender !== "female")){
+                    warningMessage();
+                    }else if(($femaleBefore &&  $passengerGender !== "female")){
+                        warningMessage();
                    }else{
                     $result = insertPassenger($con,$seatNumber,$passengerName,$passengerGender,$dob,$age,$from_loc,$to_loc,$updatedprice,$userId,$busnumber);
                       if($result){
@@ -74,6 +76,7 @@ if(isset($_POST['submit'])){
             }
         }
     }elseif($counted >= 2){
+
         $formData = array();
         for ($i = 0; $i < $counted; $i++) {
             $seatNumber = $_POST['seatnumber'][$i]; $seatNum = $seatNumber; $passengerName = $_POST['passengerName'][$i];$passengerGender = $_POST['passengerGender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];            
@@ -99,8 +102,7 @@ if(isset($_POST['submit'])){
                     $updatedAvailability = $exAvailability - 1;
                     updateBus($con,$updatedAvailability,$busnumber);
                  }
-            }
-                if($seatnum === '13' ||$seatnum === '23' || $seatnum === '33' || $seatnum === '43'||$seatnum === '53' || $seatnum === '63' || $seatnum === '73'||$seatnum === '83'){
+            }else if($seatnum === '13' ||$seatnum === '23' || $seatnum === '33' || $seatnum === '43'||$seatnum === '53' || $seatnum === '63' || $seatnum === '73'||$seatnum === '83'){
                     $before = $seatnum - 1;
                     $beforeFemale = femaleSeat($con,$before);
                     $gender = $formData[0]['passengerGender'];
@@ -136,6 +138,7 @@ if(isset($_POST['submit'])){
         }
         $_SESSION['formData'] = $form;
         payment(); 
+        
     }
 }
 function insertPassenger($con,$seat_number,$name,$gender,$dob,$age,$from,$to,$price,$userid,$busId){
