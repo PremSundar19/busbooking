@@ -300,6 +300,8 @@ function updateBus($con,$updatedAvailability,$busnumber){
             }
             });
    });
+
+ //  Franklin 
 </script>
 </body>
 </html>
