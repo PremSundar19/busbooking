@@ -1,18 +1,17 @@
 <?php 
  include_once("config.php");
  if(isset($_POST['submit'])){
-     $count = $_POST['count'];
-     
+     $count = $_POST['count'];   
      if(isset($count)){
           for($i=0;$i<$count;$i++){
              $seatnumber = $_POST['seat'][$i];
+             $query = "UPDATE passenger SET payment_status='Paid' WHERE seatno=$seatnumber";
+             $result = mysqli_query($con,$query);
           }
+          header("location:ticket_message.php");
      }
-
  }
- 
  ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,10 +36,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
-    
 </head>
 <body>
-
        <?php 
         session_start();
          if(isset($_SESSION['formData'])){
@@ -51,8 +48,6 @@
                $total += $formData[$j]['price'];
            }
         } ?>
-
-
 <div class="row justify-content-center">
     <h1 class="text-center">Payment Form</h1>
 </div>
@@ -83,7 +78,6 @@
                                 <input type="number" class="form-control" id="price" name="price" value="<?php echo $formData[$i]['price'];?>"/>
                             </div>
                         </div> 
-                
                     <?php }?>
                         <div class="row">
                             <div class="col-md-6">
@@ -102,7 +96,6 @@
             </form>
         </div>
 <?php }   ?>
-
 <script>
     var totalAmount = <?php echo json_encode($total); ?>;
     $("#total").val(totalAmount);
@@ -117,11 +110,6 @@
         }    
     });
 });
-
 </script>
-
-   
-
-       
 </body>
 </html>

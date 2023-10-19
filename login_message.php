@@ -32,6 +32,7 @@
         </div>
        <?php 
        header("Refresh:2;bus.php");
+       exit;
        ?>
 </body>
 </html>

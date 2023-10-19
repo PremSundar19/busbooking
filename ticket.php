@@ -107,8 +107,8 @@ if(isset($_POST['booksubmit'])){
 <?php 
    
     include_once("config.php");
-    $sql = "SELECT * FROM passenger";
-    $result = mysqli_query($con, $sql);
+    $query = "SELECT * FROM passenger";
+    $result = mysqli_query($con, $query);
     $bookedSeats = array();
     $femaleSeats = array();
     while ($row = mysqli_fetch_assoc($result)) {

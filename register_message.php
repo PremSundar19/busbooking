@@ -32,6 +32,7 @@
         </div>
        <?php 
        header("Refresh:2;url=login.php");
+       exit;
        ?>
 </body>
 </html>

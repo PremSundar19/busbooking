@@ -24,13 +24,6 @@
 </style>
 </head>
 <body>
-
-<?php 
-   include_once("config.php");
-   $query = "UPDATE passenger SET "
-
-?>
-    
 <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -41,7 +34,8 @@
             </div>
         </div>
         <?php 
-         header("refresh:1;url=bus.php")
+         header("refresh:1;url=bus.php");
+         exit;
         ?>
 </body>
 </html>

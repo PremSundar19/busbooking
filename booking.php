@@ -28,53 +28,50 @@ if(isset($_POST['submit'])){
              $form[] = array('seat' => $seatNumber,'name' => $passengerName,'price' => $updatedprice);
              $_SESSION['formData'] = $form;
 
-             payment();
-            
-            // if($seatNumber === '14'||$seatNumber === '24' || $seatNumber === '34' || $seatNumber === '44' ||$seatNumber === '54'||$seatNumber === '64' || $seatNumber === '74' || $seatNumber === '84'){
-            //     $after = $seatNum + 1;
-            //     $femaleAfter = femaleSeat($con,$after);
-            //     if($femaleAfter &&  $passengerGender !== 'female' ){
-            //         warningMessage();
-            //     }else{
-            //         $result = insertPassenger($con,$seatNumber,$passengerName,$passengerGender,$dob,$age,$from_loc,$to_loc,$updatedprice,$userId,$busnumber);
-            //         if($result){
-            //             $exAvailability = seatAvailability($con,$busnumber);
-            //             $updatedAvailability = $exAvailability - 1;
-            //             updateBus($con,$updatedAvailability,$busnumber);
-            //             payment();
-            //        }
-            //     }
-            // }elseif($seatNumber === '15'||$seatNumber === '25' || $seatNumber === '35' || $seatNumber === '45' ||$seatNumber === '55'||$seatNumber === '65' || $seatNumber === '75' || $seatNumber === '85'){
-            //     $before = $seatNum - 1;
-            //     $femaleBefore = femaleSeat($con,$before);
-            //     if($femaleBefore &&  $passengerGender !== 'female' ){
-            //         warningMessage();
-            //     }else{
-            //         $result = insertPassenger($con,$seatNumber,$passengerName,$passengerGender,$dob,$age,$from_loc,$to_loc,$updatedprice,$userId,$busnumber);
-            //         if($result){
-            //         $exAvailability = seatAvailability($con,$busnumber);
-            //         $updatedAvailability = $exAvailability - 1;
-            //         updateBus($con,$updatedAvailability,$busnumber);
-            //         payment();
-            //    }
-            //  }
-            // }else{
-            //     $before = $seatNum - 1; $after = $seatNum + 1;
-            //     $femaleBefore = femaleSeat($con,$after);
-            //     $femaleBefore = femaleSeat($con,$before);
-            //     if(($femaleBefore &&  $passengerGender !== "female")|| ($femaleAfter && $passengerGender !== "female")){
-            //            warningMessage();
-            //        }else{
-            //         $result = insertPassenger($con,$seatNumber,$passengerName,$passengerGender,$dob,$age,$from_loc,$to_loc,$updatedprice,$userId,$busnumber);
-            //           if($result){
-            //                 $exAvailability = seatAvailability($con,$busnumber);
-            //                 $updatedAvailability = $exAvailability - 1;
-            //                 updateBus($con,$updatedAvailability,$busnumber);
-            //                 payment();
-            //            }
-            //      }
-            // }
-
+            if($seatNumber === '14'||$seatNumber === '24' || $seatNumber === '34' || $seatNumber === '44' ||$seatNumber === '54'||$seatNumber === '64' || $seatNumber === '74' || $seatNumber === '84'){
+                $after = $seatNum + 1;
+                $femaleAfter = femaleSeat($con,$after);
+                if($femaleAfter &&  $passengerGender !== 'female' ){
+                    warningMessage();
+                }else{
+                    $result = insertPassenger($con,$seatNumber,$passengerName,$passengerGender,$dob,$age,$from_loc,$to_loc,$updatedprice,$userId,$busnumber);
+                    if($result){
+                        $exAvailability = seatAvailability($con,$busnumber);
+                        $updatedAvailability = $exAvailability - 1;
+                        updateBus($con,$updatedAvailability,$busnumber);
+                        payment();
+                   }
+                }
+            }elseif($seatNumber === '15'||$seatNumber === '25' || $seatNumber === '35' || $seatNumber === '45' ||$seatNumber === '55'||$seatNumber === '65' || $seatNumber === '75' || $seatNumber === '85'){
+                $before = $seatNum - 1;
+                $femaleBefore = femaleSeat($con,$before);
+                if($femaleBefore &&  $passengerGender !== 'female' ){
+                    warningMessage();
+                }else{
+                    $result = insertPassenger($con,$seatNumber,$passengerName,$passengerGender,$dob,$age,$from_loc,$to_loc,$updatedprice,$userId,$busnumber);
+                    if($result){
+                    $exAvailability = seatAvailability($con,$busnumber);
+                    $updatedAvailability = $exAvailability - 1;
+                    updateBus($con,$updatedAvailability,$busnumber);
+                    payment();
+               }
+             }
+            }else{
+                $before = $seatNum - 1; $after = $seatNum + 1;
+                $femaleBefore = femaleSeat($con,$after);
+                $femaleBefore = femaleSeat($con,$before);
+                if(($femaleBefore &&  $passengerGender !== "female")|| ($femaleAfter && $passengerGender !== "female")){
+                       warningMessage();
+                   }else{
+                    $result = insertPassenger($con,$seatNumber,$passengerName,$passengerGender,$dob,$age,$from_loc,$to_loc,$updatedprice,$userId,$busnumber);
+                      if($result){
+                            $exAvailability = seatAvailability($con,$busnumber);
+                            $updatedAvailability = $exAvailability - 1;
+                            updateBus($con,$updatedAvailability,$busnumber);
+                            payment();
+                       }
+                 }
+            }
         }
     }elseif($counted >= 2){
         $formData = array();
@@ -103,7 +100,6 @@ if(isset($_POST['submit'])){
                     updateBus($con,$updatedAvailability,$busnumber);
                  }
             }
-                  
                 if($seatnum === '13' ||$seatnum === '23' || $seatnum === '33' || $seatnum === '43'||$seatnum === '53' || $seatnum === '63' || $seatnum === '73'||$seatnum === '83'){
                     $before = $seatnum - 1;
                     $beforeFemale = femaleSeat($con,$before);
@@ -162,14 +158,14 @@ function femaleSeat($con,$seatNumber){
     return $row['gender'] === 'female';
 }
 function seatAvailability($con,$busnumber){
-    $query ="Select availability from bus where busno=$busnumber";
+    $query ="SELECT availability FROM bus WHERE busno=$busnumber";
     $result = mysqli_query($con, $query);
     $row = mysqli_fetch_array($result);
     return $exAvailability = $row['availability'];
 }
 
 function updateBus($con,$updatedAvailability,$busnumber){
-    $query = "UPDATE bus SET availability=$updatedAvailability where busno=$busnumber";
+    $query = "UPDATE bus SET availability=$updatedAvailability WHERE busno=$busnumber";
     mysqli_query($con,$query);
 }
 ?>

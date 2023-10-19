@@ -33,6 +33,7 @@
         </div>
        <?php 
        header("Refresh:1;url=cancel_ticket.php");
+       exit;
        ?>
 </body>
 </html>

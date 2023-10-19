@@ -2,13 +2,13 @@
            include_once("config.php");
            if(isset($_POST["approve"])){
             $userId = $_POST["id"];
-            $updatePassenger = "UPDATE register SET status='approved' WHERE id=$userId";
-            mysqli_query($con, $updatePassenger);
+            $query = "UPDATE register SET status='approved' WHERE id = $userId";
+            mysqli_query($con, $query);
            }
            else if(isset($_POST["reject"])){
             $userId = $_POST["id"];
-            $updatePassenger = " UPDATE register SET status = 'rejected' WHERE id = $userId";
-            mysqli_query($con, $updatePassenger);
+            $query = " UPDATE register SET status = 'rejected' WHERE id = $userId";
+            mysqli_query($con, $query);
            }
      ?>
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
             background-color: #f4f4f4;
             font-family: Arial, sans-serif;
         }
-        .button-container {
+    .button-container {
     width: 145px; 
     }
     .logout{
@@ -49,10 +49,10 @@
             </thead>
             <tbody>
                 <?php
-                $fetchPassengers = "SELECT *  FROM register";
-                $passengersResult = mysqli_query($con,$fetchPassengers);
-                if (mysqli_num_rows($passengersResult) > 0) {
-                    while ($row = mysqli_fetch_array($passengersResult)) {
+                $query = "SELECT *  FROM register";
+                $result = mysqli_query($con,$query);
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_array($result)) {
                         if($row["status"] == "pending"){
                             echo "<tr>";
                             echo "<td>" . $row["name"] . "</td>";

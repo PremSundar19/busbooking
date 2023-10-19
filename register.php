@@ -9,8 +9,8 @@
     $gender = $_POST['gender'];
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
     include('config.php');
-    $insertUser = "INSERT INTO register (name,email,phone,dob,age,gender,password) VALUES('$name','$email',$phone,'$dob',$age,'$gender','$password');";
-    if(mysqli_query($con,$insertUser)){
+    $query = "INSERT INTO register (name,email,phone,dob,age,gender,password) VALUES('$name','$email',$phone,'$dob',$age,'$gender','$password');";
+    if(mysqli_query($con,$query)){
         header('location:register_message.php');
         exit;
     }else{

@@ -44,13 +44,14 @@ if (!isset($_SESSION['userid'])) {
                     <th>From_location</th>
                     <th>To_location</th>
                     <th>Price</th>
+                    <th>Payment status</th>
                  </tr>
             </thead>
             <tbody>
                 <?php
                 include_once('config.php');
-                $sql = "SELECT *  FROM passenger WHERE user_id=$userId";
-                $result = mysqli_query($con,$sql);
+                $query = "SELECT *  FROM passenger WHERE user_id=$userId";
+                $result = mysqli_query($con,$query);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) {
                             echo "<tr>";
@@ -59,6 +60,7 @@ if (!isset($_SESSION['userid'])) {
                             echo "<td>" . $row["from_location"] . "</td>";
                             echo "<td>" . $row["to_location"] . "</td>";
                             echo "<td>" . $row["price"] . "</td>";
+                            echo "<td>" . $row["payment_status"] . "</td>";
                             echo "</tr>";
                         }
                       }  else {

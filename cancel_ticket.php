@@ -49,8 +49,8 @@ if (!isset($_SESSION['userid'])) {
             <tbody>
                 <?php
                 include_once('config.php');
-                $fetchPassenger = "SELECT *  FROM passenger WHERE user_id=$userId";
-                $result = mysqli_query($con,$fetchPassenger);
+                $query = "SELECT *  FROM passenger WHERE user_id=$userId";
+                $result = mysqli_query($con,$query);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) {
                             echo "<tr>";
@@ -79,21 +79,21 @@ if (!isset($_SESSION['userid'])) {
     <?php 
        if(isset($_POST['CANCEL'])){
          $seatNumber = $_POST['seatno'];
-         $fetchPassengerQuery = "SELECT bus_id,seatno FROM passenger where seatno=$seatNumber";
-         $passengerResult = mysqli_query($con,$fetchPassengerQuery);
-         $prow = mysqli_fetch_array($passengerResult);
-         $busno = $prow['bus_id'];
+         $query = "SELECT bus_id,seatno FROM passenger where seatno=$seatNumber";
+         $result = mysqli_query($con,$query);
+         $row = mysqli_fetch_array($result);
+         $busno = $row['bus_id'];
 
-        $deletePassenger = "DELETE FROM passenger WHERE seatno=$seatNumber";
-        $result = mysqli_query($con,$deletePassenger);
+        $deleteQuery = "DELETE FROM passenger WHERE seatno=$seatNumber";
+        $result = mysqli_query($con,$deleteQuery);
             if($result){
-                $fetchBus = "SELECT availability FROM bus where busno=$busno";
-                $busResult = mysqli_query($con,$fetchBus);
-                $brow = mysqli_fetch_array($busResult);
-                $exAvailability = $brow['availability'];
+                $query = "SELECT availability FROM bus where busno=$busno";
+                $result = mysqli_query($con,$query);
+                $row = mysqli_fetch_array($result);
+                $exAvailability = $row['availability'];
                 $updatedAvailability = $exAvailability + 1;
-                $updatePassenger = "UPDATE bus SET availability=$updatedAvailability where busno=$busno";
-                mysqli_query($con,$updatePassenger);
+                $updateQuery = "UPDATE bus SET availability=$updatedAvailability where busno=$busno";
+                mysqli_query($con,$updateQuery);
                 header("location:ticket_cancelled_message.php");
                 exit;
             }

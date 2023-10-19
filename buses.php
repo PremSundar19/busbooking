@@ -51,9 +51,8 @@ if (!isset($_SESSION['userid'])) {
                 $from = strtolower( $_POST['from']);
                 $to =  strtolower($_POST['to']);
                 $date = $_POST['date'];
-                
-                $fetchBus = "SELECT * FROM bus WHERE `from_loc`='$from' AND `to_loc`='$to'";
-                $result = mysqli_query($con,$fetchBus);
+                $query = "SELECT * FROM bus WHERE `from_loc`='$from' AND `to_loc`='$to'";
+                $result = mysqli_query($con,$query);
                 $count = 0;
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
