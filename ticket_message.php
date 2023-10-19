@@ -18,9 +18,13 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-    </style>
+        .container {
+            margin-top: 50px;
+        } 
+</style>
 </head>
 <body>
+    
 <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -30,8 +34,8 @@
                 </div>
             </div>
         </div>
-       <?php 
-       header("Refresh:1;url=ticket.php");
-       ?>
+        <?php 
+         header("refresh:1;url=bus.php")
+        ?>
 </body>
 </html>

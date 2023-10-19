@@ -37,7 +37,7 @@ if (!isset($_SESSION['userid'])) {
         <a class="btn btn-primary home" href="bus.php">Home</a>
         <a class="btn btn-danger logout" href="logout_message.php">Log Out</a>
         <table class="table table-striped table-bordered table-hover">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <th>Seat No</th>
                     <th>Passenger Name</th>

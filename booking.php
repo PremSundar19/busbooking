@@ -7,13 +7,14 @@ if (!isset($_SESSION['userid'])) {
 }
 ?>
 <?php 
+ $form =array();
 if(isset($_POST['submit'])){
     include_once('config.php');
     $busnumber = $_POST['busno'];$userId = $_SESSION['userid']; $from = $_SESSION['from'];
     $to = $_SESSION['to']; $counted = $_SESSION['count'];
     if($counted == 1){
         for ($i = 0; $i < $counted; $i++) {
-            $seatNumber = $_POST['seatnumber'][$i];
+             $seatNumber = $_POST['seatnumber'][$i];
              $seatNum = $seatNumber; 
              $passengerName = $_POST['passengerName'][$i];
              $passengerGender = $_POST['passengerGender'][$i];
@@ -23,6 +24,9 @@ if(isset($_POST['submit'])){
              $updatedprice = doubleval($_POST['price1'][$i]) ; 
              $from_loc = $_POST['from'][$i];
              $to_loc = $_POST['to'][$i];
+  
+             $form[] = array('seat' => $seatNumber,'name' => $passengerName,'price' => $updatedprice);
+             $_SESSION['formData'] = $form;
             
             if($seatNumber === '14'||$seatNumber === '24' || $seatNumber === '34' || $seatNumber === '44' ||$seatNumber === '54'||$seatNumber === '64' || $seatNumber === '74' || $seatNumber === '84'){
                 $after = $seatNum + 1;
@@ -68,12 +72,14 @@ if(isset($_POST['submit'])){
                        }
                  }
             }
+
         }
     }elseif($counted >= 2){
         $formData = array();
         for ($i = 0; $i < $counted; $i++) {
             $seatNumber = $_POST['seatnumber'][$i]; $seatNum = $seatNumber; $passengerName = $_POST['passengerName'][$i];$passengerGender = $_POST['passengerGender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];            
             $formData[] = array('seatNumber' => $seatNumber,'passengerName' => $passengerName, 'passengerGender' => $passengerGender,'dob' => $dob,'age' => $age,'updatedprice' => $updatedprice,'from_loc' => $from_loc,'to_loc' => $to_loc,'userId'=> $userId,'busId'=>$busnumber);
+            $form[] = array('seat' => $seatNumber,'name' => $passengerName,'price' => $updatedprice);
         }
             for($j=0;$j<count($formData);$j++){
                 $seatnum = $formData[0]['seatNumber'];
@@ -130,6 +136,7 @@ if(isset($_POST['submit'])){
                     }
                 }
         }
+        $_SESSION['formData'] = $form;
         ticketMessage(); 
     }
 }
@@ -139,7 +146,7 @@ function insertPassenger($con,$seat_number,$name,$gender,$dob,$age,$from,$to,$pr
     return $result =  mysqli_query($con,$query);
 }
 function ticketMessage(){
-    header("location:ticket_message.php");
+    header("location:payment.php");
     exit; 
 }
 function warningMessage(){
@@ -206,7 +213,7 @@ function updateBus($con,$updatedAvailability,$busnumber){
 </div>
 <?php if(isset($count) > 0) { ?>
         <?php for ($i = 0; $i < $count; $i++) {  ?>
-            <div class="container mt-5">
+    <div class="container mt-5">
     <form class="passenger-form" method='POST' action="booking.php">
         <input type="text" class="form-control" name="count" value="<?php echo $count; ?>" style='display: none;'>
         <input type="text" class="form-control" name="busno" value="<?php echo $busno; ?>" style='display: none;'>

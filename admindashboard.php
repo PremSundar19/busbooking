@@ -37,7 +37,7 @@
 <div class="container">
         <h2 style='display:inline' >Registered Users</h2> <a class="btn btn-primary logout" href="logout_message.php">Log Out</a>
         <table class="table table-striped table-bordered table-hover">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
