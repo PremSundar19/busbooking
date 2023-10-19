@@ -2,7 +2,7 @@
 session_start();
 $userId = $_SESSION['userid'] ;
 if (!isset($_SESSION['userid'])) {
-  header("Location: login.php");
+  header("location:login.php");
   exit;
 }
 ?>
@@ -94,7 +94,7 @@ if (!isset($_SESSION['userid'])) {
                 $updatedAvailability = $exAvailability + 1;
                 $updatePassenger = "UPDATE bus SET availability=$updatedAvailability where busno=$busno";
                 mysqli_query($con,$updatePassenger);
-                header("Location:ticket_cancelled_message.php");
+                header("location:ticket_cancelled_message.php");
                 exit;
             }
        }

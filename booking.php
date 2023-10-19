@@ -13,40 +13,43 @@ if(isset($_POST['submit'])){
     $to = $_SESSION['to']; $counted = $_SESSION['count'];
     if($counted == 1){
         for ($i = 0; $i < $counted; $i++) {
-            $seatNumber = $_POST['seatnumber'][$i]; $seatNum = $seatNumber; $passengerName = $_POST['passengerName'][$i];$passengerGender = $_POST['passengerGender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];
+            $seatNumber = $_POST['seatnumber'][$i];
+             $seatNum = $seatNumber; 
+             $passengerName = $_POST['passengerName'][$i];
+             $passengerGender = $_POST['passengerGender'][$i];
+             $input = strtotime($_POST['dob'][$i]);
+             $dob = Date('Y-m-d', $input);
+             $age = intval($_POST['age'][$i]);
+             $updatedprice = doubleval($_POST['price1'][$i]) ; 
+             $from_loc = $_POST['from'][$i];
+             $to_loc = $_POST['to'][$i];
             
-            if($seatNumber === '14'||$seatNumber === '24' || $seatNumber === '34' || $seatNumber === '44' ||$seatNumber === '54'||$seatNumber === '64' || $seatNumber == '74' || $seatNumber == '84'){
+            if($seatNumber === '14'||$seatNumber === '24' || $seatNumber === '34' || $seatNumber === '44' ||$seatNumber === '54'||$seatNumber === '64' || $seatNumber === '74' || $seatNumber === '84'){
                 $after = $seatNum + 1;
                 $femaleAfter = femaleSeat($con,$after);
                 if($femaleAfter &&  $passengerGender !== 'female' ){
-                    header('location:warningMessage.php');
-                    exit;
+                    warningMessage();
                 }else{
-                    $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
-                    $result =  mysqli_query($con,$insertPassenger);
+                    $result = insertPassenger($con,$seatNumber,$passengerName,$passengerGender,$dob,$age,$from_loc,$to_loc,$updatedprice,$userId,$busnumber);
                     if($result){
                         $exAvailability = seatAvailability($con,$busnumber);
                         $updatedAvailability = $exAvailability - 1;
                         updateBus($con,$updatedAvailability,$busnumber);
-                        header("location:ticket_message.php");
-                        exit;
+                        ticketMessage();
                    }
                 }
-            }elseif($seatNumber === '15'||$seatNumber === '25' || $seatNumber === '35' || $seatNumber === '45' ||$seatNumber === '55'||$seatNumber === '65' || $seatNumber == '75' || $seatNumber == '85'){
+            }elseif($seatNumber === '15'||$seatNumber === '25' || $seatNumber === '35' || $seatNumber === '45' ||$seatNumber === '55'||$seatNumber === '65' || $seatNumber === '75' || $seatNumber === '85'){
                 $before = $seatNum - 1;
                 $femaleBefore = femaleSeat($con,$before);
                 if($femaleBefore &&  $passengerGender !== 'female' ){
-                    header('location:warningMessage.php');
-                    exit;
+                    warningMessage();
                 }else{
-                    $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
-                    $result =  mysqli_query($con,$insertPassenger);
-                   if($result){
+                    $result = insertPassenger($con,$seatNumber,$passengerName,$passengerGender,$dob,$age,$from_loc,$to_loc,$updatedprice,$userId,$busnumber);
+                    if($result){
                     $exAvailability = seatAvailability($con,$busnumber);
                     $updatedAvailability = $exAvailability - 1;
                     updateBus($con,$updatedAvailability,$busnumber);
-                    header("location:ticket_message.php");
-                    exit;
+                    ticketMessage();
                }
              }
             }else{
@@ -54,17 +57,14 @@ if(isset($_POST['submit'])){
                 $femaleBefore = femaleSeat($con,$after);
                 $femaleBefore = femaleSeat($con,$before);
                 if(($femaleBefore &&  $passengerGender !== "female")|| ($femaleAfter && $passengerGender !== "female")){
-                       header('location:warningMessage.php');
-                       exit;
+                       warningMessage();
                    }else{
-                        $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
-                        $result =  mysqli_query($con,$insertPassenger);
-                        if($result){
+                    $result = insertPassenger($con,$seatNumber,$passengerName,$passengerGender,$dob,$age,$from_loc,$to_loc,$updatedprice,$userId,$busnumber);
+                      if($result){
                             $exAvailability = seatAvailability($con,$busnumber);
                             $updatedAvailability = $exAvailability - 1;
                             updateBus($con,$updatedAvailability,$busnumber);
-                            header("location:ticket_message.php");
-                            exit;
+                            ticketMessage();
                        }
                  }
             }
@@ -72,79 +72,79 @@ if(isset($_POST['submit'])){
     }elseif($counted >= 2){
         $formData = array();
         for ($i = 0; $i < $counted; $i++) {
-            $seatNumber = $_POST['seatnumber'][$i]; $seatNum = $seatNumber; $passengerName = $_POST['passengerName'][$i];$passengerGender = $_POST['passengerGender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];
-
-            // $before = $seatNum - 1; $after = $seatNum + 1;
-            // $beforeSeat = "SELECT gender FROM passenger WHERE seatno=$before";
-            // $beforeSeatResult =  mysqli_query($con,$beforeSeat);
-            // $beforeRowData = mysqli_fetch_array($beforeSeatResult);
-
-            // $afterSeat = "SELECT gender FROM passenger WHERE seatno=$after";
-            // $afterSeatResult =  mysqli_query($con,$afterSeat);
-            // $afterRowData = mysqli_fetch_array($afterSeatResult);
-    
-    
-            // if(($beforeRowData['gender'] === 'female' && $passengerGender !== 'female')||($afterRowData['gender'] === 'female'  && $passengerGender !== 'female')){
-            //     header('location:warningMessage.php');
-            //     exit;
-            // }else{
-            //      $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id) VALUES($seatNumber,'$passengerName','$passengerGender','$dob',$age,'$from_loc','$to_loc',$updatedprice,$userId,$busnumber)";
-            //      $passengerResult =  mysqli_query($con,$insertPassenger);
-            //      if($passengerResult){
-            //         $exAvailability = seatAvailability($con,$busnumber);
-            //         $updatedAvailability = $exAvailability - 1;
-            //         updateBus($con,$updatedAvailability,$busnumber);
-            //    }
-            // }
-            
-            $formData[] = array(
-                'seatNumber' => $seatNumber,
-                'passengerName' => $passengerName,
-                'passengerGender' => $passengerGender,
-                'dob' => $dob,
-                'age' => $age,
-                'updatedprice' => $updatedprice,
-                'from_loc' => $from_loc,
-                'to_loc' => $to_loc,
-                'userId'=> $userId,
-                'busId'=>$busnumber
-            );
+            $seatNumber = $_POST['seatnumber'][$i]; $seatNum = $seatNumber; $passengerName = $_POST['passengerName'][$i];$passengerGender = $_POST['passengerGender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];            
+            $formData[] = array('seatNumber' => $seatNumber,'passengerName' => $passengerName, 'passengerGender' => $passengerGender,'dob' => $dob,'age' => $age,'updatedprice' => $updatedprice,'from_loc' => $from_loc,'to_loc' => $to_loc,'userId'=> $userId,'busId'=>$busnumber);
         }
-        //  echo count($formData);
-
             for($j=0;$j<count($formData);$j++){
-
-                $gender = $formData[0]['passengerGender'];
-                //   echo $gender;
-                if($gender === 'male'){
-                    header('Location.warningMessage.php');
-                    exit;
-                }else{
+                $seatnum = $formData[0]['seatNumber'];
+ 
+                $female = $formData[0]['passengerGender'];
                     
-                    $seat_number = $formData[$j]['seatNumber'];
-                    $passenger_name = $formData[$j]['passengerName'];
-                    $passenger_gender = $formData[$j]['passengerGender'];
-                    $passenger_dob = $formData[$j]['dob'];
-                    $passenger_age = $fo rmData[$j]['age'];
-                    $passenger_price = $formData[$j]['updateprice'];
-                    $passenger_from = $formData[$j]['from_loc'];
-                    $passenger_to = $formData[$j]['to_loc'];
-                    $user_Id = $formData[$j]['userId'];
-                    $busId = $formData[$j]['busId'];
-
-                  $insertPassenger = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id)  VALUES($seat_number,'$passenger_name','$passenger_gender','$passenger_dob',$passenger_age,'$passenger_from','$passenger_to_loc',$passenegr_price,$user_Id,$busId)";
-                  $passengerResult =  mysqli_query($con,$insertPassenger);
-                 if($passengerResult){
+                if(($seatnum === "21" && $female === 'female')||($seatnum === "31" && $female === 'female')||($seatnum === "41" && $female === 'female')||($seatnum === "51" && $female === 'female')||($seatnum === "61" && $female === 'female')||($seatnum === "71" && $female === 'female')||($seatnum === "81" && $female === 'female')){
+                    $twoSeatAfter = $seatnum + 2;
+                    $after2 = femaleSeat($con,$twoSeatAfter);
+                    if($after2){
+                       warningMessage();
+                    }
+               }else if(($seatnum === "21" && $female !== 'female')||($seatnum === "31" && $female !== 'female')||($seatnum === "41" && $female !== 'female')||($seatnum === "51" && $female !== 'female')||($seatnum === "61" && $female !== 'female')||($seatnum === "71" && $female !== 'female')||($seatnum === "81" && $female !== 'female')){
+                 $seat_number = $formData[$j]['seatNumber'];$name = $formData[$j]['passengerName'];$gender = $formData[$j]['passengerGender'];$dob = $formData[$j]['dob'];$age = $formData[$j]['age']; $price = $formData[$j]['updatedprice'];$from = $formData[$j]['from_loc'];$to = $formData[$j]['to_loc']; $userid = $formData[$j]['userId'];$busId = $formData[$j]['busId'];
+                 $result = insertPassenger($con,$seat_number,$name,$gender,$dob,$age,$from,$to,$price,$userid,$busId);
+                 if($result){
                     $exAvailability = seatAvailability($con,$busnumber);
                     $updatedAvailability = $exAvailability - 1;
                     updateBus($con,$updatedAvailability,$busnumber);
-               } 
-                }
-
+                 }
             }
-            header("location:ticket_message.php");
-            exit;  
+                  
+                if($seatnum === '13' ||$seatnum === '23' || $seatnum === '33' || $seatnum === '43'||$seatnum === '53' || $seatnum === '63' || $seatnum === '73'||$seatnum === '83'){
+                    $before = $seatnum - 1;
+                    $beforeFemale = femaleSeat($con,$before);
+                    $gender = $formData[0]['passengerGender'];
+                    if($gender !== "female" && $beforeFemale){
+                      warningMessage();
+                    }else{
+                        $seat_number = $formData[$j]['seatNumber'];$name = $formData[$j]['passengerName'];$gender = $formData[$j]['pa 10.ssengerGender'];$dob = $formData[$j]['dob'];$age = $formData[$j]['age']; $price = $formData[$j]['updatedprice'];$from = $formData[$j]['from_loc'];$to = $formData[$j]['to_loc']; $userid = $formData[$j]['userId'];$busId = $formData[$j]['busId'];
+                        $result = insertPassenger($con,$seat_number,$name,$gender,$dob,$age,$from,$to,$price,$userid,$busId);
+                        if($result){
+                           $exAvailability = seatAvailability($con,$busnumber);
+                           $updatedAvailability = $exAvailability - 1;
+                           updateBus($con,$updatedAvailability,$busnumber);
+                        }
+                    }
+                }else if($seatnum !== "21" ||$seatnum !== "31" ||$seatnum !== "41" ||$seatnum !== "51"||$seatnum !== "61"||$seatnum !== "71" ||$seatnum !== "81"){
+                         $before = $seatnum - 1;$after = $seatnum  + 1;
+                         $beforeFemale = femaleSeat($con,$before);
+                         $afterFemale = femaleSeat($con,$after);  
+                         $gender = $formData[0]['passengerGender'];
+
+                    if(($beforeFemale && $gender !== "female") || ($afterFemale  && $gender !== "female")){
+                        warningMessage();
+                    }else{
+                     $seat_number = $formData[$j]['seatNumber'];$name = $formData[$j]['passengerName'];$gender = $formData[$j]['passengerGender'];$dob = $formData[$j]['dob'];$age = $formData[$j]['age']; $price = $formData[$j]['updatedprice'];$from = $formData[$j]['from_loc'];$to = $formData[$j]['to_loc']; $userid = $formData[$j]['userId'];$busId = $formData[$j]['busId'];
+                     $result = insertPassenger($con,$seat_number,$name,$gender,$dob,$age,$from,$to,$price,$userid,$busId);
+                     if($result){
+                        $exAvailability = seatAvailability($con,$busnumber);
+                        $updatedAvailability = $exAvailability - 1;
+                        updateBus($con,$updatedAvailability,$busnumber);
+                     } 
+                    }
+                }
+        }
+        ticketMessage(); 
     }
+}
+function insertPassenger($con,$seat_number,$name,$gender,$dob,$age,$from,$to,$price,$userid,$busId){
+    $query = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id)  
+    VALUES($seat_number,'$name','$gender','$dob',$age,'$from','$to',$price,$userid,$busId)";
+    return $result =  mysqli_query($con,$query);
+}
+function ticketMessage(){
+    header("location:ticket_message.php");
+    exit; 
+}
+function warningMessage(){
+    header('location:warningMessage.php');
+    exit;
 }
 function femaleSeat($con,$seatNumber){
     $query = "SELECT * FROM passenger WHERE seatno=$seatNumber";
