@@ -1,3 +1,18 @@
+<?php 
+ include_once("config.php");
+ if(isset($_POST['submit'])){
+     $count = $_POST['count'];
+     
+     if(isset($count)){
+          for($i=0;$i<$count;$i++){
+             $seatnumber = $_POST['seat'][$i];
+          }
+     }
+
+ }
+ 
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +59,8 @@
 <?php if(isset($count) > 0) { ?>
   <?php for($i = 0; $i <$count; $i++) {  ?>
         <div class="container" style="max-width: 700px;">
-            <form class="passenger-form" method='POST' action="ticket_message.php" id="form">
+            <form class="passenger-form" method='POST' action="payment.php" id="form">
+            <input type="hidden" class="form-control" name="count" value="<?php echo $count; ?>">
                 <div class="row justify-content-center">
                     <div class="passengerform">
                     <div class="row mb-3">
@@ -52,7 +68,7 @@
                                 <?php if($i == 0){ ?> 
                                     <label for="seatNumber">Seat Number</label>
                              <?php }?>
-                                    <input type="number" class="form-control" id="seat" name="seat" value="<?php echo $formData[$i]['seat']; ?>"/>
+                                    <input type="number" class="form-control" id="seat" name="seat[]" value="<?php echo $formData[$i]['seat']; ?>"/>
                             </div>
                             <div class="col-md-4">
                             <?php if($i == 0){ ?>

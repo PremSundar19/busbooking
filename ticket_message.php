@@ -24,6 +24,12 @@
 </style>
 </head>
 <body>
+
+<?php 
+   include_once("config.php");
+   $query = "UPDATE passenger SET "
+
+?>
     
 <div class="container">
         <div class="row justify-content-center">
