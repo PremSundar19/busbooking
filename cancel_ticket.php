@@ -79,14 +79,27 @@ if (!isset($_SESSION['userid'])) {
     <?php 
        if(isset($_POST['CANCEL'])){
          $seatNumber = $_POST['seatno'];
-         $query = "SELECT bus_id,seatno FROM passenger where seatno=$seatNumber";
+         $query = "SELECT * FROM passenger where seatno=$seatNumber";
          $result = mysqli_query($con,$query);
          $row = mysqli_fetch_array($result);
+
+         $name = $row['passenger_name'];
+         $from = $row['from_location'];
+         $to = $row['to_location'];
+         $price = $row['price'];
          $busno = $row['bus_id'];
+         $userId =$row['user_id'];
+         $status = "Cancelled";
+
+       $reductionAmount = ($price * 6) / 100;
+
+       $final = $price - $reductionAmount;
 
         $deleteQuery = "DELETE FROM passenger WHERE seatno=$seatNumber";
         $result = mysqli_query($con,$deleteQuery);
             if($result){
+                $queryInsert = "INSERT INTO passengercopy(seatno,name,from_loc,to_loc,price,status,refundable_price,user_id) VALUES($seatNumber,'$name','$from','$to',$price,'$status',$final,$userId)";
+                mysqli_query($con,$queryInsert);
                 $query = "SELECT availability FROM bus where busno=$busno";
                 $result = mysqli_query($con,$query);
                 $row = mysqli_fetch_array($result);

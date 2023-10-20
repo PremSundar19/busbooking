@@ -60,11 +60,6 @@ margin-top: 4rem;
         </span>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto"> 
-                 <li class="nav-item">
-                    <span class="nav-link" href="#">
-                        <img src="help_logo.png" alt="Help" width="30" height="30" class="mr-2">Help
-                    </span>
-                </li> 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="myAccountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     My Account
@@ -77,10 +72,18 @@ margin-top: 4rem;
                         <form action="cancel_ticket.php" method="post">
                         <button type="submit" name="CANCELTICKETS" id="CANCELTICKETS" class="btn btn-default dropdown-item"  style=" color: black;">Cancel Tickets</button>
                         </form>
+                        <form action="cancelledTicket.php" method="post">
+                        <button type="submit" name="CANCELLED_TICKETS" id="CANCELTICKETS" class="btn btn-default dropdown-item"  style=" color: black;">Cancelled Tickets</button>
+                        </form>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="logout_message.php">Logout</a>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <span class="nav-link" href="#">
+                        <img src="help_logo.png" alt="Help" width="30" height="30" class="mr-2">Help
+                    </span>
+                </li> 
             </ul>
         </div>
     </nav>
