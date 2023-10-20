@@ -87,17 +87,32 @@ margin-top: 4rem;
     <p class="heading">Best Bus Booking App</p>
     <div class="container" id="box" >
         <form class="form-inline"  action="buses.php" method="post">
+        <div class="form-group">
+            <label for="from">From :&ensp;</label>
+            <select class="form-control" id="from" name="from" required>
+                <option value="Chennai">Chennai</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="krishnagiri">krishnagiri</option>
+                <option value="Salem">salem</option>
+                <option value="Ooty">Ooty</option>
+                <option value="Dharmapuri">Dharmapuri</option>
+            </select>
+        </div>
             <div class="form-group">
-                <label for="from">From : &ensp;</label>
-                <input type="text" class="form-control" id="from" name="from" required>
-            </div>
-            <div class="form-group">
-                <label for="to">&ensp;To :&ensp; </label>
-                <input type="text" class="form-control" id="to" name="to"  required>
-            </div>
+            <label for="to">&ensp;To :&ensp;</label>
+            <select class="form-control" id="to" name="to" required>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Chennai">Chennai</option>
+                <option value="krishnagiri">krishnagiri</option>
+                <option value="Salem">salem</option>
+                <option value="Ooty">Ooty</option>
+                <option value="Dharmapuri">Dharmapuri</option>
+            </select>
+        </div>
             <div class="form-group">
                 <label for="TravelDate">&ensp;Travel Date : &ensp;</label>
                 <input type="date" class="form-control" id="date" name="date"  required>
+                <small class="text-danger" id="dateError"></small>
                 &ensp;
             </div>
             <div class="form-group" >
@@ -108,5 +123,22 @@ margin-top: 4rem;
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+           $('#date').change(function(){ 
+             var dateInput = $('#date').val();
+             var date =new Date(dateInput);
+             var today = new Date();
+
+             var yesterday = new Date(Date.now() - 86400000);//24hours * 60 minute * 60secound * 1000 millisec
+
+             if(date < yesterday){
+                $('#dateError').text("Please Select Proper Date.");
+             }else{
+                $('#dateError').text("");
+             }
+           });           
+        });
+    </script>
 </body>
 </html>

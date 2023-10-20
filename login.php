@@ -70,6 +70,7 @@ if (isset($_POST['USER'])) {
             padding: 35px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid black;
         }
     </style>
 </head>
@@ -99,7 +100,10 @@ if (isset($_POST['USER'])) {
                             <div class="col-md-6">
                             <input type="submit" name="ADMIN" value="Admin Log In" class="btn btn-primary btn-block">
                             </div>
-                        </div>                       
+                        </div> 
+                            <div class="row justify-content-center">
+                            <a class="btn btn-primary" style="width : 40%;" href="register.php">Register</a>
+                            </div>
                     </form>
                 </div>
             </div>

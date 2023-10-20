@@ -48,8 +48,8 @@ if (!isset($_SESSION['userid'])) {
             <?php 
               if(isset($_POST['SEARCH'])){
                 include_once('config.php');
-                $from = strtolower( $_POST['from']);
-                $to =  strtolower($_POST['to']);
+                $from = $_POST['from'];
+                $to =  $_POST['to'];
                 $date = $_POST['date'];
                 $query = "SELECT * FROM bus WHERE `from_loc`='$from' AND `to_loc`='$to'";
                 $result = mysqli_query($con,$query);
