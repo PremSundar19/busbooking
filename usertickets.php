@@ -51,7 +51,7 @@ if (!isset($_SESSION['userid'])) {
             <tbody>
                 <?php
                 include_once('config.php');
-                $query = "SELECT passenger.*,bus.bus_name FROM passenger  JOIN bus ON passenger.bus_id = bus.busno WHERE passenger.user_id=$userId";
+                $query = "SELECT passenger.*,bus.bus_name FROM passenger JOIN bus ON passenger.bus_id = bus.busno WHERE passenger.user_id=$userId";
                 $result = mysqli_query($con,$query);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) {

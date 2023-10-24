@@ -56,28 +56,8 @@
             </div>
         </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script language="javascript">
-function printTicket(){ 
-  var display ="width=800, height=600, left=100, top=25"; 
-  var bill = document.getElementById("bill").innerHTML; 
-  
-  var docprint=window.open("","",display); 
-   docprint.document.open(); 
-   docprint.document.write('<html><head></head>'); 
-   docprint.document.write('<body onLoad="self.print()" style="width: 400px; font-size:12px; font-family:arial;">');          
-   docprint.document.write(bill);          
-   docprint.document.write('</body></html>'); 
-   docprint.document.close(); 
-   docprint.focus(); 
-   setTimeout(function(){
-   	docprint.close()
-   },750)
-}
-</script>
 </body>
 </html>

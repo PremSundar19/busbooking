@@ -44,10 +44,6 @@ if(isset($_POST['booksubmit'])){
             background-color: #F85958;
             cursor: not-allowed;
         }
-        .demo{
-            display:none;
-        }
-        
     </style>
 </head>
 <body>

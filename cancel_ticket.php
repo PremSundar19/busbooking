@@ -6,6 +6,44 @@ if (!isset($_SESSION['userid'])) {
 //   exit;
 }
 ?>
+
+<?php 
+       if(isset($_POST['CANCEL'])){
+        include_once('config.php');
+         $seatNumber = $_POST['seatno'];
+         $busname = $_POST['busname'];
+         $busId = $_POST['busid'];
+         $query = "SELECT * FROM passenger where seatno=$seatNumber AND bus_id=$busId";
+         $result = mysqli_query($con,$query);
+         $row = mysqli_fetch_array($result);
+         $name = $row['passenger_name'];
+         $from = $row['from_location'];
+         $to = $row['to_location'];
+         $price = $row['price'];
+         $busno = $row['bus_id'];
+         $userId =$row['user_id'];
+         $status = "Cancelled";
+   
+         $reductionAmount = ($price * 6) / 100;
+         $refundable = $price - $reductionAmount;
+ 
+        $deleteQuery = "DELETE FROM passenger WHERE seatno=$seatNumber AND bus_id=$busId";
+        $result = mysqli_query($con,$deleteQuery);
+            if($result){
+                $query = "INSERT INTO `passengercopy`( `seatno`, `name`, `from_loc`, `to_loc`, `busname`, `price`, `status`, `refundable_price`, `user_id`) VALUES ('$seatNumber','$name','$from','$to','$busname','$price','$status','$refundable','$userId')";
+                mysqli_query($con,$query);
+                $query = "SELECT availability FROM bus where busno=$busno";
+                $result = mysqli_query($con,$query);
+                $row = mysqli_fetch_array($result);
+                $exAvailability = $row['availability'];
+                $updatedAvailability = $exAvailability + 1;
+                $updateQuery = "UPDATE bus SET availability=$updatedAvailability where busno=$busno";
+                mysqli_query($con,$updateQuery);
+                header("location:ticketCancelledMessage.php");
+                exit;
+            }
+       }
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,18 +93,19 @@ if (!isset($_SESSION['userid'])) {
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) {
                             echo "<tr>";
-                            echo "<td>" . $row["seatno"] . "</td>";
-                            echo "<td>" . $row["passenger_name"] . "</td>";
-                            echo "<td>" .$row['bus_name']."</td>";
-                            echo "<td>" . $row["from_location"] . "</td>";
-                            echo "<td>" . $row["to_location"] . "</td>";
-                            echo "<td>" . $row["price"] . "</td>";
+                            echo "<td>".$row["seatno"]."</td>";
+                            echo "<td>".$row["passenger_name"]."</td>";
+                            echo "<td>".$row['bus_name']."</td>";
+                            echo "<td>".$row["from_location"]."</td>";
+                            echo "<td>".$row["to_location"]."</td>";
+                            echo "<td>".$row["price"]."</td>";
                                 echo "<td>";
                                 echo "<div class='button-container'>";
                                 echo "<form method='post' action='cancel_ticket.php'>";
-                                echo "<input type='hidden' name='seatno' value='" . $row["seatno"] . "'>";
+                                echo "<input type='hidden' name='seatno' value='".$row["seatno"]."'>";
+                                echo "<input type='hidden' name='busname' value='".$row["bus_name"]."'>";
+                                echo "<input type='hidden' name='busid' value='".$row["bus_id"]."'>";
                                 echo "<input id='CANCEL' class='btn btn-danger' value='CANCEL' type='submit' name='CANCEL'>";
-                                echo "<input type='hidden' name='busname' value='" . $row["bus_name"] . "'>";
                                 echo "</form>";
                                 echo "</div>";
                                 echo "</td>";
@@ -79,46 +118,5 @@ if (!isset($_SESSION['userid'])) {
             </tbody>
         </table>    
     </div>
-    <?php 
-       if(isset($_POST['CANCEL'])){
-        include_once('config.php');
-         $seatNumber = $_POST['seatno'];
-         $busname = $_POST['busname'];
-         $query = "SELECT * FROM passenger where seatno=$seatNumber";
-         $result = mysqli_query($con,$query);
-         $row = mysqli_fetch_array($result);
-         $name = $row['passenger_name'];
-         $from = $row['from_location'];
-         $to = $row['to_location'];
-         $price = $row['price'];
-         $busno = $row['bus_id'];
-         $userId =$row['user_id'];
-         $status = "Cancelled";
-
-
-       $reductionAmount = ($price * 6) / 100;
-
-       $refundable = $price - $reductionAmount;
-
-        $deleteQuery = "DELETE FROM passenger WHERE seatno=$seatNumber";
-        $result = mysqli_query($con,$deleteQuery);
-            if($result){
-                $query = "INSERT INTO `passengercopy`( `seatno`, `name`, `from_loc`, `to_loc`, `bus _name`, `price`, `status`, `refundable_price`, `user_id`) VALUES ('$seatNumber','$name','$from','$to','$busname','$price','$status','$refundable','$userId')";
-                mysqli_query($con,$query);
-                
-                $query = "SELECT availability FROM bus where busno=$busno";
-                $result = mysqli_query($con,$query);
-                $row = mysqli_fetch_array($result);
-                $exAvailability = $row['availability'];
-                $updatedAvailability = $exAvailability + 1;
-                
-                $updateQuery = "UPDATE bus SET availability=$updatedAvailability where busno=$busno";
-                mysqli_query($con,$updateQuery);
-
-                header("location:ticketCancelledMessage.php");
-                exit;
-            }
-       }
-    ?>
 </body>
 </html>

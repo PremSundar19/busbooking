@@ -42,6 +42,7 @@ if (!isset($_SESSION['userid'])) {
                     <th>Passenger Name</th>
                     <th>From_location</th>
                     <th>To_location</th>
+                    <th>Bus Name</th>
                     <th>Price</th>
                     <th>refundable price</th>
                     <th>Status</th>
@@ -50,7 +51,7 @@ if (!isset($_SESSION['userid'])) {
             <tbody>
                 <?php
                 include_once('config.php');
-                $query = "SELECT *  FROM passengercopy WHERE user_id=$userId";
+                $query = "SELECT * FROM passengercopy WHERE user_id=$userId";
                 $result = mysqli_query($con,$query);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) {
@@ -59,6 +60,7 @@ if (!isset($_SESSION['userid'])) {
                             echo "<td>" . $row["name"] . "</td>";
                             echo "<td>" . $row["from_loc"] . "</td>";
                             echo "<td>" . $row["to_loc"] . "</td>";
+                            echo "<td>" . $row["busname"] ."</td>";
                             echo "<td>" . $row["price"] . "</td>";
                             echo "<td>" . $row["refundable_price"] . "</td>";
                             echo "<td>" . $row["status"] . "</td>";
