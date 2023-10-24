@@ -42,7 +42,7 @@ if (!isset($_SESSION['userid'])) {
             </div>
         </div>
         <?php 
-         header("refresh:1;url=bus.php");
+         header("refresh:1;url=bill.php");
          exit;
         ?>
 </body>

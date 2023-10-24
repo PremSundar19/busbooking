@@ -1,10 +1,17 @@
 <?php 
 session_start();
-  $userId = $_SESSION['userid'] ;
+  
 if (!isset($_SESSION['userid'])) {
     header("Location: login.php");
     exit;
 }
+$userId = $_SESSION['userid'] ;
+if(isset($_POST['booksubmit'])){
+    $price = $_POST['price'];
+    $_SESSION['price'] = $price;
+    $busno = $_POST['busno'];
+    $_SESSION['busno'] = $busno;
+ }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,12 +52,12 @@ if (!isset($_SESSION['userid'])) {
 </head>
 <body>
     <?php 
-    if(isset($_POST['booksubmit'])){
-        $price = $_POST['price'];
-        $_SESSION['price'] = $price;
-        $busno = $_POST['busno'];
-        $_SESSION['busno'] = $busno;
-     }
+    if(isset($_SESSION['price'])){
+       $price = $_SESSION['price'];
+    }
+    if(isset($_SESSION['busno'])){
+       $busno = $_SESSION['busno'];
+    }
     ?>
     <div class="container mt-5">
         <h1 class="text-center">Bus Seat Selection</h1>

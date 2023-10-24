@@ -2,8 +2,8 @@
 session_start();
 $userId = $_SESSION['userid'] ;
 if (!isset($_SESSION['userid'])) {
-  header("location:login.php");
-  exit;
+//   header("location:login.php");
+//   exit;
 }
 ?>
 <!DOCTYPE html>
@@ -40,8 +40,9 @@ if (!isset($_SESSION['userid'])) {
                 <tr>
                     <th>Seat No</th>
                     <th>Passenger Name</th>
-                    <th>From_location</th>
-                    <th>To_location</th>
+                    <th>Bus Name</th>
+                    <th>From Location</th>
+                    <th>To Location</th>
                     <th>Price</th>
                     <th>Cancel-Ticket</th>
                 </tr>
@@ -49,13 +50,14 @@ if (!isset($_SESSION['userid'])) {
             <tbody>
                 <?php
                 include_once('config.php');
-                $query = "SELECT *  FROM passenger WHERE user_id=$userId";
+                $query = "SELECT passenger.*,bus.bus_name FROM passenger JOIN bus on bus.busno = passenger.bus_id WHERE passenger.user_id=$userId";
                 $result = mysqli_query($con,$query);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) {
                             echo "<tr>";
                             echo "<td>" . $row["seatno"] . "</td>";
                             echo "<td>" . $row["passenger_name"] . "</td>";
+                            echo "<td>" .$row['bus_name']."</td>";
                             echo "<td>" . $row["from_location"] . "</td>";
                             echo "<td>" . $row["to_location"] . "</td>";
                             echo "<td>" . $row["price"] . "</td>";
@@ -64,6 +66,7 @@ if (!isset($_SESSION['userid'])) {
                                 echo "<form method='post' action='cancel_ticket.php'>";
                                 echo "<input type='hidden' name='seatno' value='" . $row["seatno"] . "'>";
                                 echo "<input id='CANCEL' class='btn btn-danger' value='CANCEL' type='submit' name='CANCEL'>";
+                                echo "<input type='hidden' name='busname' value='" . $row["bus_name"] . "'>";
                                 echo "</form>";
                                 echo "</div>";
                                 echo "</td>";
@@ -78,7 +81,9 @@ if (!isset($_SESSION['userid'])) {
     </div>
     <?php 
        if(isset($_POST['CANCEL'])){
+        include_once('config.php');
          $seatNumber = $_POST['seatno'];
+         $busname = $_POST['busname'];
          $query = "SELECT * FROM passenger where seatno=$seatNumber";
          $result = mysqli_query($con,$query);
          $row = mysqli_fetch_array($result);
@@ -90,22 +95,26 @@ if (!isset($_SESSION['userid'])) {
          $userId =$row['user_id'];
          $status = "Cancelled";
 
+
        $reductionAmount = ($price * 6) / 100;
 
-       $final = $price - $reductionAmount;
+       $refundable = $price - $reductionAmount;
 
         $deleteQuery = "DELETE FROM passenger WHERE seatno=$seatNumber";
         $result = mysqli_query($con,$deleteQuery);
             if($result){
-                $queryInsert = "INSERT INTO passengercopy(seatno,name,from_loc,to_loc,price,status,refundable_price,user_id) VALUES($seatNumber,'$name','$from','$to',$price,'$status',$final,$userId)";
-                mysqli_query($con,$queryInsert);
+                $query = "INSERT INTO `passengercopy`( `seatno`, `name`, `from_loc`, `to_loc`, `bus _name`, `price`, `status`, `refundable_price`, `user_id`) VALUES ('$seatNumber','$name','$from','$to','$busname','$price','$status','$refundable','$userId')";
+                mysqli_query($con,$query);
+                
                 $query = "SELECT availability FROM bus where busno=$busno";
                 $result = mysqli_query($con,$query);
                 $row = mysqli_fetch_array($result);
                 $exAvailability = $row['availability'];
                 $updatedAvailability = $exAvailability + 1;
+                
                 $updateQuery = "UPDATE bus SET availability=$updatedAvailability where busno=$busno";
                 mysqli_query($con,$updateQuery);
+
                 header("location:ticketCancelledMessage.php");
                 exit;
             }

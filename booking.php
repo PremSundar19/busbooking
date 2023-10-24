@@ -7,6 +7,9 @@ if (!isset($_SESSION['userid'])) {
 $userId = $_SESSION['userid'] ;
 ?>
 <?php 
+if(isset($_SESSION['date'])){
+    $date = $_SESSION['date'];
+}
  include_once('config.php');
  $form =array();
 if(isset($_POST['submit'])){
@@ -15,7 +18,7 @@ if(isset($_POST['submit'])){
     if($counted == 1){
         for ($i = 0; $i < $counted; $i++) {
              $seatNumber = $_POST['seat'][$i];$seatnum = $seatNumber; $name = $_POST['name'][$i];$gender = $_POST['gender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];
-             $form[] = array('seat' => $seatNumber,'name' => $name,'gender'=>$gender,'dob'=>$dob,'age'=>$age,'price' => $updatedprice,'from'=>$from_loc,'to'=>$to_loc,'userId'=>$userId,'busId'=>$busnumber);
+             $form[] = array('seat' => $seatNumber,'name' => $name,'gender'=>$gender,'dob'=>$dob,'age'=>$age,'price' => $updatedprice,'from'=>$from_loc,'to'=>$to_loc,'date'=>$date,'userId'=>$userId,'busId'=>$busnumber);
              $_SESSION['formData'] = $form;
             if($seatNumber === '14'||$seatNumber === '24' || $seatNumber === '34' || $seatNumber === '44' ||$seatNumber === '54'||$seatNumber === '64' || $seatNumber === '74' || $seatNumber === '84'){
                 $after = $seatnum + 1;
@@ -42,7 +45,7 @@ if(isset($_POST['submit'])){
     }elseif($counted >= 2){
         for ($i = 0; $i < $counted; $i++) {
              $seatNumber = $_POST['seat'][$i];$seatnum = $seatNumber; $name = $_POST['name'][$i];$gender = $_POST['gender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];
-             $form[] = array('seat' => $seatNumber,'name' => $name,'gender'=>$gender,'dob'=>$dob,'age'=>$age,'price' => $updatedprice,'from'=>$from_loc,'to'=>$to_loc,'userId'=>$userId,'busId'=>$busnumber);
+             $form[] = array('seat' => $seatNumber,'name' => $name,'gender'=>$gender,'dob'=>$dob,'age'=>$age,'price' => $updatedprice,'from'=>$from_loc,'to'=>$to_loc,'date'=>$date,'userId'=>$userId,'busId'=>$busnumber);
              $_SESSION['formData'] = $form;
 
             if(($seatNumber === "21" && $gender === 'female')||($seatNumber === "31" && $gender === 'female')||($seatNumber === "41" && $female === 'female')||($seatNumber === "51" && $female === 'female')||($seatNumber === "61" && $female === 'female')||($seatNumber === "71" && $female === 'female')||($seatNumber === "81" && $female === 'female')){

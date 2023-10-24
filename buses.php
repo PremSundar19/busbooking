@@ -74,6 +74,7 @@ if (!isset($_SESSION['userid'])) {
                         echo "</tr>";
                         $_SESSION['from'] = $row['from_loc'];
                         $_SESSION['to'] = $row['to_loc'];
+                        $_SESSION['date'] = $date;
                     }
         }
             ?>      

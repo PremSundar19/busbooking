@@ -6,8 +6,13 @@
    }
  
  if(isset($_POST['submit'])){
+
+       $dateInput = strtotime($_POST['date']);
+       $travelDate = Date('Y-m-d',$dateInput);
+       $seats = array();
     for($i=0;$i<count($formData);$i++){
-       $seat = $formData[$i]['seat'];
+       $seatno = $formData[$i]['seat'];
+       $seats[] = $seatno;
        $name = $formData[$i]['name'];
        $gender = $formData[$i]['gender'];
        $dob  = $formData[$i]['dob'];
@@ -18,18 +23,20 @@
        $userId = $formData[$i]['userId'];
        $busId  = $formData[$i]['busId'];
        $paid = "Paid";
-        $result = insertPassenger($con,$seat,$name,$gender,$dob,$age,$from,$to,$price,$userId,$busId,$paid);
+        $result = insertPassenger($con,$seatno,$name,$gender,$dob,$age,$from,$to,$travelDate,$price,$userId,$busId,$paid);
         if($result){
             $exAvailability = seatAvailability($con,$busId);
             $updatedAvailability = $exAvailability - 1;
             updateBus($con,$updatedAvailability,$busId);
        }
     }
+    $_SESSION['seats'] = $seats;
+    $_SESSION['busno'] = $busId;
     header("location:ticket_message.php");
  }
- function insertPassenger($con,$seat_number,$name,$gender,$dob,$age,$from,$to,$price,$userid,$busId,$paid){
-    $query = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,price,user_id,bus_id,payment_status)  
-    VALUES($seat_number,'$name','$gender','$dob',$age,'$from','$to',$price,$userid,$busId,'$paid')";
+ function insertPassenger($con,$seatno,$name,$gender,$dob,$age,$from,$to,$travelDate,$price,$userid,$busId,$paid){
+    $query = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,Date_Of_Travel,price,user_id,bus_id,payment_status)  
+    VALUES($seatno,'$name','$gender','$dob',$age,'$from','$to','$travelDate',$price,$userid,$busId,'$paid')";
     return mysqli_query($con,$query);
 }
 function femaleSeat($con,$seatNumber){
@@ -88,12 +95,17 @@ if(isset($_SESSION['formData'])){
            for ($j = 0; $j < $count; $j++) {
                $total += $form[$j]['price'];
            }
+
+           if(isset($_SESSION['date'])){
+              $date = $_SESSION['date'];
+           }
 }
 ?>
   <?php for($i = 0; $i <$count; $i++) {  ?>
         <div class="container" style="max-width: 500px;">
             <form class="passenger-form" method='POST' action="payment.php" id="form">
             <input type="hidden" class="form-control" name="count" value="<?php echo $count; ?>">
+            <input type="hidden" class="form-control" name="date" value="<?php echo $date; ?>">
                 <div class="row justify-content-center">
                     <div class="passengerform">
                     <div class="row">
