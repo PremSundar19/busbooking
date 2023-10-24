@@ -1,5 +1,10 @@
 <?php
  session_start();
+ $userId = $_SESSION['userid'] ;
+if (!isset($_SESSION['userid'])) {
+  header("Location: login.php");
+  exit;
+}
  include_once("config.php");
  if(isset($_SESSION['formData'])){
     $formData  = $_SESSION['formData'];     

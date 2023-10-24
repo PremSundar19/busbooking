@@ -2,8 +2,8 @@
 session_start();
 $userId = $_SESSION['userid'] ;
 if (!isset($_SESSION['userid'])) {
-//   header("location:login.php");
-//   exit;
+  header("location:login.php");
+  exit;
 }
 ?>
 

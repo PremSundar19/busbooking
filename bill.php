@@ -1,3 +1,10 @@
+<?php 
+session_start();
+if (!isset($_SESSION['userid'])) {
+    header("Location: login.php");
+    exit;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +30,7 @@
                         <h3>Ticket Receipt</h3>
                     </div>
                         <?php 
-                        session_start();
+                        
                         include('config.php');
                         if(isset($_SESSION['seats'])){
                             $seats = $_SESSION['seats'];

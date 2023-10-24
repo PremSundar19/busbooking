@@ -1,4 +1,9 @@
 <?php
+        session_start();
+        if (!isset($_SESSION['userid'])) {
+        header("Location: login.php");
+        exit;
+        }
            include_once("config.php");
            if(isset($_POST["approve"])){
             $userId = $_POST["id"];
