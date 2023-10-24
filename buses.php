@@ -46,7 +46,7 @@ if (!isset($_SESSION['userid'])) {
             </thead>
             <tbody>
             <?php 
-              if(isset($_POST['SEARCH'])){
+              if(isset($_POST['submit'])){
                 include_once('config.php');
                 $from = $_POST['from'];
                 $to =  $_POST['to'];

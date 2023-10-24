@@ -89,7 +89,7 @@ margin-top: 4rem;
     </nav>
     <p class="heading">Best Bus Booking App</p>
     <div class="container" id="box" >
-        <form class="form-inline"  action="buses.php" method="post">
+        <form class="form-inline" id="form" action="buses.php" method="post">
         <div class="form-group">
             <label for="from">From :&ensp;</label>
             <select class="form-control" id="from" name="from" required>
@@ -119,7 +119,7 @@ margin-top: 4rem;
                 &ensp;
             </div>
             <div class="form-group" >
-                <button type="submit" name="SEARCH" id="SEARCH" class="btn btn-default Search"  style="background-color: chocolate; color: white;">SEARCH</button>
+                <button type="submit" name="submit"  class="btn btn-default Search"  style="background-color: chocolate; color: white;">SEARCH</button>
             </div>
         </form>
     </div>
@@ -128,19 +128,25 @@ margin-top: 4rem;
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function(){
-           $('#date').change(function(){ 
-             var dateInput = $('#date').val();
-             var date =new Date(dateInput);
-             var today = new Date();
-
-             var yesterday = new Date(Date.now() - 86400000);//24hours * 60 minute * 60secound * 1000 millisec
-
-             if(date < yesterday){
-                $('#dateError').text("Please Select Proper Date.");
-             }else{
-                $('#dateError').text("");
-             }
-           });           
+        //    $('#date').change(function(){ 
+        //      var date = $('#date').val();
+        //      var selectedDate =new Date(date);
+        //      var yesterday = new Date(Date.now() - 86400000);//24hours * 60 minute * 60secound * 1000 millisec
+        //             if(selectedDate < yesterday){
+        //                 $('#dateError').text("Please Select Proper Date.");
+        //             }else{
+        //                 $('#dateError').text("");
+        //             }
+        //     });           
+                $('#form').on("submit",function(event){
+                    var date = $('#date').val();
+                    var selectedDate = new Date(date);
+                    var yesterday = new Date(Date.now() - 86400000);//24hours * 60 minute * 60secound * 1000 millisec
+                    if (selectedDate <= yesterday) {
+                        alert("Please select a valid date.");
+                        event.preventDefault(); 
+                        }
+                });
         });
     </script>
 </body>
