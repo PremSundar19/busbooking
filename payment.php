@@ -82,15 +82,13 @@ function updateBus($con,$updatedAvailability,$busnumber){
 </div>
 <?php
 if(isset($_SESSION['formData'])){
-
-}
     $form  = $_SESSION['formData'];
     $count = count($form);
            $total = 0;
            for ($j = 0; $j < $count; $j++) {
                $total += $form[$j]['price'];
            }
-
+}
 ?>
   <?php for($i = 0; $i <$count; $i++) {  ?>
         <div class="container" style="max-width: 500px;">
@@ -139,7 +137,8 @@ if(isset($_SESSION['formData'])){
         </div>
 <script>
     var totalAmount = <?php echo json_encode($total); ?>;
-    $("#total").val(totalAmount);
+    $(document).ready(function(){  $("#total").val(totalAmount); });
+  
     // $(document).ready(function() {
     // $("#form").on("submit", function(event) {
     //     event.preventDefault(); 

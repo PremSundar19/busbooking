@@ -23,16 +23,11 @@ if(isset($_POST['submit'])){
                 if($femaleAfter &&  $gender !== 'female' ){
                     warningMessage();
                 }
-                else{
-                    payment();
-                }
             }elseif($seatNumber === '15'||$seatNumber === '25' || $seatNumber === '35' || $seatNumber === '45' ||$seatNumber === '55'||$seatNumber === '65' || $seatNumber === '75' || $seatNumber === '85'){
                 $before = $seatnum - 1;
                 $femaleBefore = femaleSeat($con,$before);
                 if($femaleBefore &&  $gender !== 'female' ){
                     warningMessage();
-                }else{
-                    payment();
                 }
             }else{
                 $before = $seatnum - 1; $after = $seatnum + 1;
@@ -40,16 +35,16 @@ if(isset($_POST['submit'])){
                 $femaleBefore = femaleSeat($con,$before);
                    if(($femaleAfter && $gender !== "female" || $femaleBefore &&  $gender !== "female")){
                         warningMessage();
-                   }else{
-                    payment();
-                 }
+                   }
             }
         }
+        payment();
     }elseif($counted >= 2){
         for ($i = 0; $i < $counted; $i++) {
              $seatNumber = $_POST['seat'][$i];$seatnum = $seatNumber; $name = $_POST['name'][$i];$gender = $_POST['gender'][$i];$input = strtotime($_POST['dob'][$i]);$dob = Date('Y-m-d', $input);$age = intval($_POST['age'][$i]);$updatedprice = doubleval($_POST['price1'][$i]) ; $from_loc = $_POST['from'][$i];$to_loc = $_POST['to'][$i];
              $form[] = array('seat' => $seatNumber,'name' => $name,'gender'=>$gender,'dob'=>$dob,'age'=>$age,'price' => $updatedprice,'from'=>$from_loc,'to'=>$to_loc,'userId'=>$userId,'busId'=>$busnumber);
              $_SESSION['formData'] = $form;
+
             if(($seatNumber === "21" && $gender === 'female')||($seatNumber === "31" && $gender === 'female')||($seatNumber === "41" && $female === 'female')||($seatNumber === "51" && $female === 'female')||($seatNumber === "61" && $female === 'female')||($seatNumber === "71" && $female === 'female')||($seatNumber === "81" && $female === 'female')){
                 $twoSeatAfter = $seatnum + 2;
                 $oneSeatAfer = $seatnum +1;
@@ -134,7 +129,7 @@ function warningMessage(){
 <div class="row justify-content-center">
     <h1 class="text-center">Passenger Information</h1>
 </div>
-<?php if(isset($count) > 0) { ?>
+<?php if($count > 0) { ?>
         <?php for ($i = 0; $i < $count; $i++) {  ?>
     <div class="container mt-5">
     <form class="passenger-form" method='POST' action="booking.php">
@@ -187,13 +182,16 @@ function warningMessage(){
                 </div>
             </div>
             <br>
-        <?php } ?>
+        <?php }?>
         <div class="row justify-content-center mt-4">
             <input type="submit" name='submit'  class="btn btn-primary" value='Book-Seats'>
         </div>
     </form>
 </div>
-<?php }   ?>
+<?php }else{
+            header("Location:selectticket_message.php");
+            exit;
+        }  ?>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script>

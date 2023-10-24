@@ -5,12 +5,6 @@ if (!isset($_SESSION['userid'])) {
     header("Location: login.php");
     exit;
 }
-if(isset($_POST['booksubmit'])){
-   $price = $_POST['price'];
-   $_SESSION['price'] = $price;
-   $busno = $_POST['busno'];
-   $_SESSION['busno'] = $busno;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,14 +45,12 @@ if(isset($_POST['booksubmit'])){
 </head>
 <body>
     <?php 
-    if($_SESSION['price']){
-        $price_1 = $_SESSION['price'];
-    }
-    if($_SESSION['busno']){
-        $bus_1 = $_SESSION['busno'];
-    }
-    
-    
+    if(isset($_POST['booksubmit'])){
+        $price = $_POST['price'];
+        $_SESSION['price'] = $price;
+        $busno = $_POST['busno'];
+        $_SESSION['busno'] = $busno;
+     }
     ?>
     <div class="container mt-5">
         <h1 class="text-center">Bus Seat Selection</h1>
@@ -93,10 +85,10 @@ if(isset($_POST['booksubmit'])){
                     <form action="booking.php" method="post">
                     <input type="hidden" name="selectedSeats" id="selectedSeatsInput">
                       <div class="text-center mt-4">
-                      <input type='number' name='price' id='price'  value="<?php echo  $price_1; ?>" style='display: none;'>
-                      <input type='text' name='busno' id='busno' value="<?php echo $bus_1; ?>" style='display: none;'>
+                      <input type='number' name='price' id='price'  value="<?php echo  $price; ?>" style='display: none;'>
+                      <input type='text' name='busno' id='busno' value="<?php echo $busno; ?>" style='display: none;'>
                       <input id="bookSeatsButton" class="btn btn-primary" value="Book-Seats" type="submit" name="bookSeatsButton">
-                      <a class="btn btn-primary back" href="bus.php">Back</a>
+                      <a class="btn btn-danger back" href="bus.php">Back</a>
                      </div>
             </div>
         </div>
@@ -105,9 +97,11 @@ if(isset($_POST['booksubmit'])){
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <?php 
-   
+
+    $busno = $_SESSION['busno'];
+
     include_once("config.php");
-    $query = "SELECT * FROM passenger";
+    $query = "SELECT * FROM passenger where bus_id=$busno";
     $result = mysqli_query($con, $query);
     $bookedSeats = array();
     $femaleSeats = array();
@@ -143,7 +137,7 @@ if(isset($_POST['booksubmit'])){
         for (var i = 0; i < bookedSeats.length; i++) {
             $('#' + bookedSeats[i]).addClass('disabled').prop('disabled', true);
         }
-        for(var i=0;i<femaleSeats.length;i++){
+        for(var i = 0;i<femaleSeats.length;i++){
             $('#' + femaleSeats[i]).addClass('pink').prop('disabled',true);
         }
         $('#bookSeatsButton').click(function() {

@@ -2,8 +2,8 @@
 session_start();
 $userId = $_SESSION['userid'] ;
 if (!isset($_SESSION['userid'])) {
-//   header("location:login.php");
-//   exit;
+  header("location:login.php");
+  exit;
 }
 ?>
 <!DOCTYPE html>
@@ -82,7 +82,6 @@ if (!isset($_SESSION['userid'])) {
          $query = "SELECT * FROM passenger where seatno=$seatNumber";
          $result = mysqli_query($con,$query);
          $row = mysqli_fetch_array($result);
-
          $name = $row['passenger_name'];
          $from = $row['from_location'];
          $to = $row['to_location'];

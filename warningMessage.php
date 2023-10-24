@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<?php
+session_start();
+$userId = $_SESSION['userid'] ;
+if (!isset($_SESSION['userid'])) {
+  header("Location: login.php");
+  exit;
+}
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -32,7 +39,6 @@
             </div>
         </div>
        <?php 
-       session_start();
        header('refresh:1;url=ticket.php');
        exit;
        ?>

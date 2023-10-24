@@ -26,7 +26,6 @@ body {
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center;
-    /* font-family: Arial, sans-serif; */
     min-height: 100vh;
     display: flex;
     flex-direction: column;

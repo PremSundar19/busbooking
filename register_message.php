@@ -31,6 +31,7 @@
             </div>
         </div>
        <?php 
+       session_start();
        header("Refresh:2;url=login.php");
        exit;
        ?>

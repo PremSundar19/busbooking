@@ -13,8 +13,6 @@
     if(mysqli_query($con,$query)){
         header('location:register_message.php');
         exit;
-    }else{
-        echo 'something Went Wrong';
     }
   }
 ?>

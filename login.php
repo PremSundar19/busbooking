@@ -32,10 +32,10 @@ if (isset($_POST['USER'])) {
             header('location:admindashboard.php');
             exit;
         }else{
-            echo "Admin Password Wrong";
+            $loginError =  "Admin Password Wrong";
         }
     }else{
-      echo "Admin Name Wrong";
+      $loginError =  "Admin Name Wrong";
     }
 }
 ?>

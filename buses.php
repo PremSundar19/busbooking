@@ -54,7 +54,6 @@ if (!isset($_SESSION['userid'])) {
                 $query = "SELECT * FROM bus WHERE `from_loc`='$from' AND `to_loc`='$to'";
                 $result = mysqli_query($con,$query);
                 $count = 0;
-                if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
                         echo "<tr>";
                         echo "<td>{$row['bus_name']}</td>";
@@ -66,24 +65,16 @@ if (!isset($_SESSION['userid'])) {
                         echo "<td>{$row['duration']}</td>";
                         echo "<td>{$row['availability']}</td>";
                         echo "<td>{$row['price']}</td>";
-                        if($count == 0){
                             echo "<td><form method='post' action='ticket.php'>
                             <input type='number' name='price' id='price' value='{$row['price']}' style='display: none;'>
                             <input type='text' name='busno' id='busno' value='{$row['busno']}' style='display: none;'>  
                             <input type='submit' name='booksubmit' value='BOOK' class='btn btn-primary mb-2'>
                             </form>
                              </td>";
-                             $count++;
-                        }else{
-                            echo "<td><input type='submit' name='booksubmit' value='BOOK' class='btn btn-primary mb-2'></td>";
-                        }
                         echo "</tr>";
                         $_SESSION['from'] = $row['from_loc'];
                         $_SESSION['to'] = $row['to_loc'];
                     }
-                }else{
-                    header("Location: bus_message.php");
-                }
         }
             ?>      
         </tbody>

@@ -7,7 +7,7 @@
            }
            else if(isset($_POST["reject"])){
             $userId = $_POST["id"];
-            $query = " UPDATE register SET status = 'rejected' WHERE id = $userId";
+            $query = "UPDATE register SET status = 'rejected' WHERE id = $userId";
             mysqli_query($con, $query);
            }
      ?>
@@ -49,7 +49,7 @@
             </thead>
             <tbody>
                 <?php
-                $query = "SELECT *  FROM register";
+                $query = "SELECT * FROM register";
                 $result = mysqli_query($con,$query);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) {
@@ -61,7 +61,6 @@
                             echo "<td>" . $row["gender"] . "</td>";
                             echo "<td>" . $row["status"] . "</td>";
                             echo "<td>";
-                            if ($row["status"] == "pending") {
                                 echo "<div class='button-container'>";
                                 echo "<form method='post'>";
                                 echo "<input type='hidden' name='id' value='" . $row["id"] . "'>";
@@ -69,7 +68,6 @@
                                 echo "<button type='submit' name='reject' class='btn btn-danger'>Reject</button>";
                                 echo "</form>";
                                 echo "</div>";
-                            }
                             echo "</td>";
                             echo "</tr>";
                         }    
