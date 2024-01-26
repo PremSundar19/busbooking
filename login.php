@@ -1,4 +1,30 @@
-
+<?php
+session_start();
+if(isset($_POST['ADMIN'])){
+    if($_POST['name'] === "Admin" && $_POST['password'] === "Password@123"){
+        $_SESSION['admin'] = true;
+        header("location:admindashboard.php");
+        exit;
+    }else{
+        $loginError = 'Admin credentials are incorrect.';
+    }
+}else if(isset($_POST['USER'])){
+include_once('config.php');
+$result = mysqli_query($con,"SELECT id,status FROM register WHERE name ='{$_POST['name']}' and password='". password_hash($_POST['password'], PASSWORD_BCRYPT) ."'"); 
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result);
+        if($row['status'] === "approved"){
+            $_SESSION['userid'] = $row['id'];
+            header("location:login_message.php");
+            exit;
+        }else{
+            $loginError = 'Your account is pending approval or has been rejected by the admin.';
+        }
+    }else{
+        $loginError = 'User credentials are incorrect.';
+    }
+}
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,8 +68,11 @@
                     <h2 class="text-center">Login Here</h2>
                     <?php if (isset($loginError)) { ?>
                         <div class="alert alert-danger"><?php echo $loginError; ?></div>
+                        <script>
+                            $(()=> { setTimeout(()=>{  $('.alert-danger').hide(); }, 5000); });
+                        </script>
                     <?php } ?>
-                    <form action="verify.php" method="post" id="form">
+                    <form action="login.php" method="post" id="form">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
@@ -72,3 +101,4 @@
 </body>
 </html>
 
+ 

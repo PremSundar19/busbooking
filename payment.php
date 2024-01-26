@@ -10,51 +10,72 @@ if (!isset($_SESSION['userid'])) {
     $formData  = $_SESSION['formData'];     
    }
  
- if(isset($_POST['submit'])){
+   //old code
+//  if(isset($_POST['submit'])){
 
-       $dateInput = strtotime($_POST['date']);
-       $travelDate = Date('Y-m-d',$dateInput);
-       $seats = array();
-    for($i=0;$i<count($formData);$i++){
-       $seatno = $formData[$i]['seat'];
-       $seats[] = $seatno;
-       $name = $formData[$i]['name'];
-       $gender = $formData[$i]['gender'];
-       $dob  = $formData[$i]['dob'];
-       $age  = $formData[$i]['age'];
-       $from = $formData[$i]['from'];
-       $to   = $formData[$i]['to'];
-       $price  = $formData[$i]['price'];
-       $userId = $formData[$i]['userId'];
-       $busId  = $formData[$i]['busId'];
-       $paid = "Paid";
-        $result = insertPassenger($con,$seatno,$name,$gender,$dob,$age,$from,$to,$travelDate,$price,$userId,$busId,$paid);
-        if($result){
-            $exAvailability = seatAvailability($con,$busId);
-            $updatedAvailability = $exAvailability - 1;
-            updateBus($con,$updatedAvailability,$busId);
-       }
+//        $dateInput = strtotime($_POST['date']);
+//        $travelDate = Date('Y-m-d',$dateInput);
+//        $seats = array();
+   
+   
+   
+//        for($i=0;$i<count($formData);$i++){
+//        $seatno = $formData[$i]['seat'];
+//        $seats[] = $seatno;
+//        $name = $formData[$i]['name'];
+//        $gender = $formData[$i]['gender'];
+//        $dob  = $formData[$i]['dob'];
+//        $age  = $formData[$i]['age'];
+//        $from = $formData[$i]['from'];
+//        $to   = $formData[$i]['to'];
+//        $price  = $formData[$i]['price'];
+//        $userId = $formData[$i]['userId'];
+//        $busId  = $formData[$i]['busId'];
+//        $paid = "Paid";
+//         $result = insertPassenger($con,$seatno,$name,$gender,$dob,$age,$from,$to,$travelDate,$price,$userId,$busId,$paid);
+//         if($result){
+//             $exAvailability = seatAvailability($con,$busId);
+//             $updatedAvailability = $exAvailability - 1;
+//             updateBus($con,$updatedAvailability,$busId);
+//        }
+//     }
+//     $_SESSION['seats'] = $seats;
+//     $_SESSION['busno'] = $busId;
+//     header("location:ticket_message.php");
+//  }
+//  function insertPassenger($con,$seatno,$name,$gender,$dob,$age,$from,$to,$travelDate,$price,$userid,$busId,$paid){
+//     $query = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,Date_Of_Travel,price,user_id,bus_id,payment_status)  
+//     VALUES($seatno,'$name','$gender','$dob',$age,'$from','$to','$travelDate',$price,$userid,$busId,'$paid')";
+//     return mysqli_query($con,$query);
+// }
+
+if (isset($_POST['submit'])) {
+    $travelDate = date('Y-m-d', strtotime($_POST['date']));
+    $seats = [];
+    foreach ($formData as $data) {
+        $seatno = $data['seat'];
+        $seats[] = $seatno;
+        $result = insertPassenger($con, $data, $travelDate);
+        if ($result) {
+            updateBus($con, seatAvailability($con, $data['busId']), $data['busId']);
+        }
     }
     $_SESSION['seats'] = $seats;
-    $_SESSION['busno'] = $busId;
+    $_SESSION['busno'] = $data['busId'];
     header("location:ticket_message.php");
- }
- function insertPassenger($con,$seatno,$name,$gender,$dob,$age,$from,$to,$travelDate,$price,$userid,$busId,$paid){
-    $query = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,Date_Of_Travel,price,user_id,bus_id,payment_status)  
-    VALUES($seatno,'$name','$gender','$dob',$age,'$from','$to','$travelDate',$price,$userid,$busId,'$paid')";
-    return mysqli_query($con,$query);
 }
-function femaleSeat($con,$seatNumber){
-    $query = "SELECT * FROM passenger WHERE seatno=$seatNumber";
-    $result = mysqli_query($con,$query);
-    $row = mysqli_fetch_array($result);
-    return $row['gender'] === 'female';
+
+function insertPassenger($con, $data, $travelDate)
+{
+    $query = "INSERT INTO passenger(seatno,passenger_name,gender,dob,age,from_location,to_location,Date_Of_Travel,price,user_id,bus_id,payment_status)  
+    VALUES({$data['seat']},'{$data['name']}','{$data['gender']}','{$data['dob']}',{$data['age']},'{$data['from']}','{$data['to']}','$travelDate',{$data['price']},{$data['userId']},{$data['busId']},'Paid')";
+    return mysqli_query($con, $query);
 }
 function seatAvailability($con,$busnumber){
     $query ="SELECT availability FROM bus WHERE busno=$busnumber";
     $result = mysqli_query($con, $query);
     $row = mysqli_fetch_array($result);
-    return $exAvailability = $row['availability'];
+    return $row['availability'] - 1;
 }
 
 function updateBus($con,$updatedAvailability,$busnumber){

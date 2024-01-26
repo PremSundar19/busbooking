@@ -148,6 +148,6 @@ if(isset($_POST['booksubmit'])){
             $('#selectedSeatsInput').val(selectedSeatsJSON);
         });
     });
-</script>
+</script> 
 </body>
 </html>

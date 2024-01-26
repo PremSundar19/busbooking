@@ -44,7 +44,8 @@
             <tbody>
                 <?php
                 $query = "SELECT * FROM register";
-                include_once("config.php");
+                
+        include_once("config.php");
                 $result = mysqli_query($con,$query);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) {
@@ -78,13 +79,14 @@
 </body>
 </html>
 <?php
-        include_once("config.php");
-        if(isset( $_POST["id"])){
-            $userId = $_POST["id"];
-            $status = (isset($_POST["approve"])) ? "approved" : "rejected";
-            $query = "UPDATE register SET status='$status' WHERE id = $userId";
+           if(isset($_POST["approve"])){
+            $query = "UPDATE register SET status='approved' WHERE id = $userId";
             mysqli_query($con, $query);
-            header("Location: admindashboard.php");
-        }
-?>
-
+           }
+           else if(isset($_POST["reject"])){
+            $userId = $_POST["id"];
+            $query = "UPDATE register SET status = 'rejected' WHERE id = $userId";
+            mysqli_query($con, $query);
+           }
+           header("Location: admindashboard.php");
+     ?>
