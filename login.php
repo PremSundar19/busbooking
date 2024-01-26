@@ -1,44 +1,4 @@
-<?php
-if (isset($_POST['USER'])) {
-    $name = $_POST['name']; 
-    $password = $_POST['password'];
-    include_once('config.php');
-    $query = "SELECT id,password,status FROM register WHERE name = '$name'";
-    $result = mysqli_query($con, $query);  
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_array($result);
-        $storedHashedPassword = $row['password'];
-        $id = $row['id'];
-        if (password_verify($password, $storedHashedPassword) ) {
-           if($row['status'] === "approved"){
-               session_start();
-               $_SESSION['userid'] = $id;
-               header("location:login_message.php");
-               exit;
-           }else{
-               $loginError = "Your account is pending approval or has been rejected by the admin.";
-           }
-        } else {
-            $loginError = "Incorrect password. Please try again.";
-        }
-    } else {
-        $loginError = "Please register or check your name.";
-    }
-}else if(isset($_POST['ADMIN'])){
-    $name = $_POST['name'];
-    $password = $_POST['password'];
-    if($name === "Admin"){
-        if($password === "Admin@123"){
-            header('location:admindashboard.php');
-            exit;
-        }else{
-            $loginError =  "Admin Password Wrong";
-        }
-    }else{
-      $loginError =  "Admin Name Wrong";
-    }
-}
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,7 +43,7 @@ if (isset($_POST['USER'])) {
                     <?php if (isset($loginError)) { ?>
                         <div class="alert alert-danger"><?php echo $loginError; ?></div>
                     <?php } ?>
-                    <form action="login.php" method="post" id="form">
+                    <form action="verify.php" method="post" id="form">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
@@ -111,3 +71,4 @@ if (isset($_POST['USER'])) {
     </div>
 </body>
 </html>
+

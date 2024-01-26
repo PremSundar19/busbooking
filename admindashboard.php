@@ -1,21 +1,13 @@
-<?php
-        session_start();
-        if (!isset($_SESSION['userid'])) {
-        header("Location: login.php");
-        exit;
-        }
-           include_once("config.php");
-           if(isset($_POST["approve"])){
-            $userId = $_POST["id"];
-            $query = "UPDATE register SET status='approved' WHERE id = $userId";
-            mysqli_query($con, $query);
-           }
-           else if(isset($_POST["reject"])){
-            $userId = $_POST["id"];
-            $query = "UPDATE register SET status = 'rejected' WHERE id = $userId";
-            mysqli_query($con, $query);
-           }
-     ?>
+<?php 
+  session_start();
+   if( $_SESSION['admin'] === true){
+
+   }
+  if (!isset($_SESSION['userid'])) {
+  header("Location: login.php");
+  exit;
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,12 +41,14 @@
                     <th>Phone</th>
                     <th>Gender</th>
                     <th>status</th>
-                    <th>Actions</th>
+                    <th style="width: 10%;">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $query = "SELECT * FROM register";
+                
+        include_once("config.php");
                 $result = mysqli_query($con,$query);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) {
@@ -69,8 +63,9 @@
                                 echo "<div class='button-container'>";
                                 echo "<form method='post'>";
                                 echo "<input type='hidden' name='id' value='" . $row["id"] . "'>";
-                                echo "<button type='submit' name='approve' class='btn btn-success'>Approve</button>";
-                                echo "<button type='submit' name='reject' class='btn btn-danger'>Reject</button>";
+                                echo "<button type='submit' name='approve' class='btn btn-success btn-sm'>Approve</button>";
+                                echo "&nbsp;";
+                                echo "<button type='submit' name='reject' class='btn btn-danger btn-sm'>Reject</button>";
                                 echo "</form>";
                                 echo "</div>";
                             echo "</td>";
@@ -86,3 +81,26 @@
     </div>    
 </body>
 </html>
+<?php
+        include_once("config.php");
+        // $userId = '';
+        if(isset( $_POST["id"])){
+
+            $userId = $_POST["id"];
+            $status = (isset($_POST["approve"])) ? "approved" : "rejected";
+            $query = "UPDATE register SET status='$status' WHERE id = $userId";
+            mysqli_query($con, $query);
+
+            header("Location: admindashboard.php");
+        }
+
+        //    if(isset($_POST["approve"])){
+        //     $query = "UPDATE register SET status='approved' WHERE id = $userId";
+        //     mysqli_query($con, $query);
+        //    }
+        //    else if(isset($_POST["reject"])){
+        //     $userId = $_POST["id"];
+        //     $query = "UPDATE register SET status = 'rejected' WHERE id = $userId";
+        //     mysqli_query($con, $query);
+        //    }
+     ?>
