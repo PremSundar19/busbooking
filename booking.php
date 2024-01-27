@@ -69,19 +69,14 @@ function femaleSeat($con, $seatNumber)
     $result = mysqli_query($con, $query);
     $row = mysqli_fetch_array($result);
     if($row['gender'] === 'female' &&  $gender !== 'female' ){
-        warningMessage();
+        header('location: warningMessage.php');
+        exit;
     }
 }
 
 function payment()
 {
     header("location: payment.php");
-    exit;
-}
-
-function warningMessage()
-{
-    header('location: warningMessage.php');
     exit;
 }
 ?>
