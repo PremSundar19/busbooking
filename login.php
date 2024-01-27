@@ -10,19 +10,21 @@ if(isset($_POST['ADMIN'])){
     }
 }else if(isset($_POST['USER'])){
 include_once('config.php');
-$result = mysqli_query($con,"SELECT id,status FROM register WHERE name ='{$_POST['name']}' and password='". password_hash($_POST['password'], PASSWORD_BCRYPT) ."'"); 
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_array($result);
-        if($row['status'] === "approved"){
-            $_SESSION['userid'] = $row['id'];
-            header("location:login_message.php");
-            exit;
-        }else{
-            $loginError = 'Your account is pending approval or has been rejected by the admin.';
-        }
-    }else{
-        $loginError = 'User credentials are incorrect.';
+$result = mysqli_query($con,"SELECT id,status,password FROM register WHERE name ='{$_POST['name']}'"); 
+if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_array($result);
+    if (password_verify($_POST['password'], $row['password']) ) {
+       if($row['status'] === "approved"){
+           $_SESSION['userid'] = $row['id'];
+           header("location:login_message.php");
+           exit;
+       }else{
+           $loginError = "Your account is pending approval or has been rejected by the admin.";
+       }
+    } else {
+        $loginError = 'User credentials are incorrect. Please try again.';
     }
+} 
 }
     ?>
 <!DOCTYPE html>
@@ -100,5 +102,3 @@ $result = mysqli_query($con,"SELECT id,status FROM register WHERE name ='{$_POST
     </div>
 </body>
 </html>
-
- 

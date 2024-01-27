@@ -49,10 +49,14 @@ if (!isset($_SESSION['userid'])) {
               if(isset($_POST['submit'])){
                 include_once('config.php');
                 $from = $_POST['from'];
-                $to =  $_POST['to'];
+                $to = $_POST['to'];
                 $date = $_POST['date'];
+                date_default_timezone_set('Asia/Kolkata'); 
+                $currentTime = date("h:i A");
+                // $query = "SELECT * FROM bus WHERE `from_loc`='$from' AND `to_loc`='$to' AND STR_TO_DATE(`departure_time`, '%h:%i %p') >= STR_TO_DATE('$currentTime', '%h:%i %p')";
+                
                 $query = "SELECT * FROM bus WHERE `from_loc`='$from' AND `to_loc`='$to'";
-                $result = mysqli_query($con,$query);
+                $result = mysqli_query($con, $query);
                 $count = 0;
                     while($row = mysqli_fetch_array($result)){
                         echo "<tr>";
